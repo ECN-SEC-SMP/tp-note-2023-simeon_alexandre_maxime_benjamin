@@ -9,7 +9,7 @@
       "stopAtEntry": false,
       "externalConsole": true,
       "cwd": "c:/Users/benji/source/repos/tp-note-2023-simeon_alexandre_maxime_benjamin",
-      "program": "c:/Users/benji/source/repos/tp-note-2023-simeon_alexandre_maxime_benjamin/build/Release/outRelease",
+      "program": "c:/Users/benji/source/repos/tp-note-2023-simeon_alexandre_maxime_benjamin/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
