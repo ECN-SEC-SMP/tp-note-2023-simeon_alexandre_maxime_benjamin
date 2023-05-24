@@ -1,11 +1,11 @@
 CC=g++
 CFLAGS= -Wall
 LDFLAGS=
-EXEC=div
+EXEC=main
 
 all: $(EXEC)
 
-div: main.o lit_ecrit.o utilitaires.o operations.o
+main: main.o other.o
 	$(CC) -o $@ $^ $(LDFLAGS)
 
 %.o: %.cpp
