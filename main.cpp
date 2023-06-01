@@ -1,16 +1,18 @@
 #include <iostream>
-#include "Other.hpp"
 #include "Board/Board.hpp"
 #include "Game/Game.hpp"
 #include "Position/Position.hpp"
 #include "Robot/Robot.hpp"
 #include "Target/Target.hpp"
 
+using namespace std;
+
 int main() { 
-    std::cout << "Hello everybody!\n"; 
+    cout << "Hello everybody!\n"; 
 
     // Instanciation
-    Point point1(14.0, 10.0);
+    Position pos1(10, 5);
+    Robot robot1(BLUE, pos1);
 
-    point1.affiche();
+    cout << "Couleur du robot : " << robot1.getColor() << endl;
 }
