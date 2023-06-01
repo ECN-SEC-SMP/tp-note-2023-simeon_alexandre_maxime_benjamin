@@ -8,14 +8,11 @@ class Target {
 private:
     Color color;
     Symbol symbol;
-    Position position;
 
 public:
-    Target(Color color, Symbol symbol, Position position);
+    Target(Color color, Symbol symbol);
 
     Color getColor() const;
 
     Symbol getSymbol() const;
-
-    Position getPosition() const;
 };
