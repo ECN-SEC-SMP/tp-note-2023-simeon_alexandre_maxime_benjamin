@@ -1,7 +1,7 @@
 #pragma once 
 #include <iostream>
 #include <vector>
-#include "string.h"
+#include "string"
 #include "stdlib.h"
 
 #include "../Position/Position.hpp"
