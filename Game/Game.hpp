@@ -7,6 +7,7 @@
 #include "../Position/Position.hpp"
 #include "../Robot/Robot.hpp"
 #include "../Target/Target.hpp"
+#include "../Player/Player.hpp"
 
 class Game {
 private:
@@ -15,6 +16,8 @@ private:
 
 public:
     Game(const std::vector<Robot>& robots, const std::vector<Target>& targets);
+
+    void iniGame();
 
     void playTurn();
 
