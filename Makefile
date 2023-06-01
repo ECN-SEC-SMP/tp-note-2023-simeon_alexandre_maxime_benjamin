@@ -5,7 +5,7 @@ EXEC=main
 
 all: $(EXEC)
 
-main: main.o other.o Board/Board.o Game/Game.o Position/Position.o Robot/Robot.o Target/Target.o
+main: main.o Board/Board.o Game/Game.o Position/Position.o Robot/Robot.o Target/Target.o
 	$(CC) -o $@ $^ $(LDFLAGS)
 
 %.o: %.cpp
