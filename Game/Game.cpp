@@ -1,7 +1,7 @@
 #include "Game.hpp"
 
 
-Game::Game(const Board& board, const std::vector<Robot>& robots, const std::vector<Target>& targets) : board(board), robots(robots), targets(targets) {}
+Game::Game(const std::vector<Robot>& robots, const std::vector<Target>& targets) : robots(robots), targets(targets) {}
 
 void Game::playTurn() {
 

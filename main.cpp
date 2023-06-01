@@ -1,5 +1,4 @@
 #include <iostream>
-#include "Board/Board.hpp"
 #include "Game/Game.hpp"
 #include "Position/Position.hpp"
 #include "Robot/Robot.hpp"

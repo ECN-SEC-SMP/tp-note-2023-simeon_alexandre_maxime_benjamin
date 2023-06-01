@@ -5,18 +5,16 @@
 #include "stdlib.h"
 
 #include "../Position/Position.hpp"
-#include "../Board/Board.hpp"
 #include "../Robot/Robot.hpp"
 #include "../Target/Target.hpp"
 
 class Game {
 private:
-    Board board;
     std::vector<Robot> robots;
     std::vector<Target> targets;
 
 public:
-    Game(const Board& board, const std::vector<Robot>& robots, const std::vector<Target>& targets);
+    Game(const std::vector<Robot>& robots, const std::vector<Target>& targets);
 
     void playTurn();
 
