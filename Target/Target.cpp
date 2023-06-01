@@ -18,3 +18,5 @@ Position Target::getPosition() const {
 void Target::setPosition(Position newPosition) {
     position = newPosition;
 }
+
+// abfdfngkjdfn
