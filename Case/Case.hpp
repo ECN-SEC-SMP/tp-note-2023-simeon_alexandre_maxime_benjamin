@@ -8,8 +8,8 @@
 class Case {
 private:
     bool murH, murD, murB, murG;
-    Robot robot;
-    Target target;
+    Robot* robot;
+    Target* target;
 
 public:
     Case(void);
@@ -27,10 +27,10 @@ public:
     bool getMurG(void) const;
 
     // Robot
-    void setRobot(Robot newRobot);
-    Robot getRobot(void) const;
+    void setRobot(Robot* newRobot);
+    Robot* getRobot(void) const;
 
     // Target
-    void setTarget(Target newTarget);
-    Target getTarget(void) const;
+    void setTarget(Target* newTarget);
+    Target* getTarget(void) const;
 };
