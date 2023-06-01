@@ -8,7 +8,7 @@ void Game::playTurn() {
 };
 
 void Game::moveRobot(Robot& robot, Direction direction){
-
+    
 };
 
 bool Game::isTargetReached(const Target& target) const{

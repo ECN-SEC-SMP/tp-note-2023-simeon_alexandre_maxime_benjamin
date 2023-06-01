@@ -9,6 +9,7 @@ class Robot {
 private:
     Color color;
     Position position;
+    Position prevPosition;
 
 public:
     Robot(Color color, Position position);
@@ -18,4 +19,6 @@ public:
     Position getPosition() const;
 
     void setPosition(Position newPosition);
+
+    void setPrevPosition(Position newPosition);
 };
