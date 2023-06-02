@@ -23,29 +23,23 @@ void Game::iniGame(){
     }
     unsigned nbjoueurs = atoi(signednbjoueurs.c_str()); // conversion string en unsigned 
     vector<Player*> joueurs(nbjoueurs, nullptr);
-    for (unsigned i = 0 ; i < nbjoueurs ; i+=1 ) 
+    for (unsigned i = 0 ; i < nbjoueurs ; i++ ) 
     {        
         bool nomsok = false; // vérifié que les prénoms ne sont pas en double
         cout << "nom du joueur "<< (i+1)<< " : ";
         cin >> nom;
         while (nomsok == false){ // tant qu'il y a des problèmes ...
-            cout << "in while"<<endl; 
             bool doublon = false; //variable qui vérifié la présence de doublons 
             for (unsigned u = 0; u < i && doublon == false ; u++ ){ //on test pour tous les noms jusqu'à trouver une erreur ou avoir fini
-                cout << "in for"<<endl;
-                if (nom ==  joueurs[u]->getName()) doublon = true; // si on trouve un doublon on le signal et arrête de test 
-                cout << "après if doublon vaut :" << doublon <<endl;  
+                if (nom ==  joueurs[u]->getName()) doublon = true; // si on trouve un doublon on le signal et arrête de test
             }
-            cout << "test doublon"<<endl;
             if (doublon == true){ // cas où il existe un doublon 
                 cout << "nom déjà utiliser"<< endl; 
                 cout << "nom du joueur "<< (i+1)<< " : ";
                 cin >> nom; // on récupère le nouveau nom 
-                cout << "fin test"<<endl;
             } // une fois fini la boucle recommance au début pour tester chaques noms à nouveau 
             
             else { // cas pas ou plus de doublons 
-                cout << "concluant"<<endl;
                 nomsok = true; // on signal la non présence de doublons et on stoppe la boucle 
                 }    
         } 
@@ -57,7 +51,12 @@ void Game::iniGame(){
 }
 
 void Game::playTurn() {
-
+    // int nbjoueurs = 3; // pour test
+    // int nbval = 0; 
+    // while (nbval != nbjoueurs){
+    //     cout << "nom joueur :" ;
+    //     cin << 
+    // }
 }
 
 void Game::moveRobot(Robot& robot, Direction direction){
