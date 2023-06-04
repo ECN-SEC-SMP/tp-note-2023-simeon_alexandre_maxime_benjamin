@@ -6,10 +6,10 @@
 #include "../Target/Target.hpp"
 
 enum Angle {
+    HG,
     HD,
     BD,
     BG,
-    HG,
     NONE
 };
 
@@ -21,7 +21,6 @@ private:
     Target* target;
 
 public:
-    Case(void);
 
     // Setteurs
     void setMurH(bool mur);
@@ -29,7 +28,7 @@ public:
     void setMurB(bool mur);
     void setMurG(bool mur);
 
-    void setAngle(Angle newAngle);
+    void setAngle();
 
     // Getteurs
     bool getMurH(void) const;
@@ -46,4 +45,9 @@ public:
     // Target
     void setTarget(Target* newTarget);
     Target* getTarget(void) const;
+
+    void affichage_case(Case* c[16][16],int x, int y);
+
+    //constructeur
+    Case();
 };
