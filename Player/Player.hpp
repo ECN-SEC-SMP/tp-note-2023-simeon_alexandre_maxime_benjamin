@@ -1,15 +1,16 @@
 #pragma once
 #include "string"
 #include "stdlib.h"
+using namespace std;
 
 class Player {
 private:
-    std::string name;
+    string name;
     unsigned char score;
 
 public:
-    Player(std::string name);
+    Player(string name);
     void addPoint(void);
-    std::string getName(void) const;
+    string getName(void) const;
     unsigned char getScore(void) const;
 };

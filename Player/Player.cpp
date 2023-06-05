@@ -6,7 +6,7 @@ void Player::addPoint(){
     score++;
 }
 
-std::string Player::getName() const {
+string Player::getName() const {
     return name;
 }
 
