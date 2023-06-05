@@ -78,27 +78,68 @@ void Case::setTarget(Target* newTarget) { target = newTarget; }
 
 void Case::affichage_case(Case* c[16][16], int x, int y)
 {
-    //cout << y;
+    c[7][7]->murG = 1;
+    c[7][7]->murH = 1;
 
-    if((this->murG == 0 && this->murB == 1) || (this->murG == 0 &&  c[x][y+1]->getMurH()== 1))
+    c[8][8]->murD = 1;
+    c[8][8]->murB = 1;
+
+    c[8][7]->murG = 1;
+    c[8][7]->murB = 1;   
+
+    c[8][7]->murH = 1;
+    c[8][7]->murD = 1;
+
+    for(int i=0;i<16;i++)
     {
-        cout << "|...";
+          c[i][0]->murG = 1; 
+          c[15][i]->murB = 1;
+    }  
+       
+    if((this->murG == 0 && this->murB == 1) || (y<14 && this->murG == 0 &&  c[x][y+1]->getMurH()== 1))
+    {
+        if(this->robot != nullptr && this->robot->getPosition().getX() == x && this->robot->getPosition().getY() == y)
+        {
+            cout << ":_" << this->robot->getColor() << "_";
+        }
+        else
+        {
+            cout << ":____";
+        }
+        
     }
     else if((this->murG == 1 && this->murB == 0) || (x>0 && c[x-1][y]->getMurD() == 1 && this->murB == 0))
     {
-        cout << ":___";
+        if(this->robot != nullptr && this->robot->getPosition().getX() == y && this->robot->getPosition().getY() == x)
+        {
+            cout << "|." << this->robot->getCaractereColorRobot() << ".";
+        }
+        else
+        {        
+            cout << "|....";
+        }
     }
     else if((this->murG == 1 && this->murB == 1))
     {
-        cout << ":...";
-    }
-    else if (x == 15 && y == 15)
-    {
-        cout << "___|";
+        if(this->robot != nullptr && this->robot->getPosition().getX() == y && this->robot->getPosition().getY() == x) 
+        {
+            cout << "|_" << this->robot->getCaractereColorRobot() << "_";
+        }
+        else
+        {        
+            cout << "|____";
+        }    
     }
     else
     {
-        cout << "|___";
+        if(this->robot != nullptr && this->robot->getPosition().getX() == y && this->robot->getPosition().getY() == x)
+        {
+            cout << ":." << this->robot->getCaractereColorRobot() << ".";
+        }
+        else
+        {        
+            cout << ":....";
+        }    
     }
                    
     

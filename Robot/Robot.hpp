@@ -1,8 +1,9 @@
 #pragma once 
 #include "string"
 #include "stdlib.h"
-
 #include "../Position/Position.hpp"
+
+using namespace std;
 
 
 class Robot {
@@ -21,4 +22,6 @@ public:
     void setPosition(Position newPosition);
 
     void setPrevPosition(Position newPosition);
+
+    string getCaractereColorRobot()const;
 };

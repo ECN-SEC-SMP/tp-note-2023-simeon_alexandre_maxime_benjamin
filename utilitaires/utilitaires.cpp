@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include "utilitaires.hpp"
 #include "../Case/Case.hpp"
+#include "../Position/Position.hpp"
 
 using namespace std;
 
@@ -32,13 +33,13 @@ coordonnees_mur_aleatoire mur_horizontale(quart cote)
         srand( time( NULL ) );
         mur.x = 15;
         mur.y =0;
-        mur.y = rand() % 9 + 7;    
+        mur.y = rand() % 8 + 7;    
     break;
     case 3:
         srand( time( NULL ) );
         mur.x = 0;
         mur.y =0;
-        mur.y = rand() % 9 + 7;    
+        mur.y = rand() % 8 + 7;    
     break;
 
     default:
@@ -63,7 +64,7 @@ coordonnees_mur_aleatoire mur_vertical(int cote)
         srand( time( NULL ) );
         mur.y = 0;
         mur.x = 0;
-        mur.x = rand() % 7;
+        mur.x = 1 + rand() % 7;
     break;
     case 1:
         srand( time( NULL ) );
@@ -81,7 +82,7 @@ coordonnees_mur_aleatoire mur_vertical(int cote)
         srand( time( NULL ) );
         mur.y = 15;
         mur.x = 0;
-        mur.x = rand() % 7;    
+        mur.x = 1 + rand() % 7;    
     break;  
     default:
         mur.x = 0;
@@ -110,7 +111,7 @@ void afficher_plateau(Case* c[16][16])
 {
     for(int i=0;i<16;i++)
     {
-        cout << " ___";
+        cout << " ____";
     }
     cout << endl;
 
@@ -121,15 +122,14 @@ void afficher_plateau(Case* c[16][16])
             c[y][x]->affichage_case(c,x,y);
             
         }
-        cout << "|" << endl;
-        
+        cout << "|" << endl;        
     }
 }
 
 
 void mur_aleatoire(Case* plateau[16][16])
 {
-    coordonnees_mur_aleatoire mur_hor_premier_quart = mur_horizontale(premier_quart);
+   coordonnees_mur_aleatoire mur_hor_premier_quart = mur_horizontale(premier_quart);
    coordonnees_mur_aleatoire mur_vert_premier_quart = mur_vertical(premier_quart);
 
    coordonnees_mur_aleatoire mur_hor_deuxieme_quart = mur_horizontale(deuxieme_quart);
@@ -142,16 +142,18 @@ void mur_aleatoire(Case* plateau[16][16])
    coordonnees_mur_aleatoire mur_vert_quatrieme_quart = mur_vertical(quatrieme_quart);   
     
 
-    plateau[mur_hor_premier_quart.x][mur_hor_premier_quart.y]->setMurG(1);
-    plateau[mur_vert_premier_quart.x][mur_vert_premier_quart.y]->setMurB(1);
+   plateau[mur_hor_premier_quart.x][mur_hor_premier_quart.y]->setMurG(1);
+   plateau[mur_vert_premier_quart.x][mur_vert_premier_quart.y]->setMurB(1);
         
-    plateau[mur_hor_deuxieme_quart.x][mur_hor_deuxieme_quart.y]->setMurG(1);
-    plateau[mur_vert_deuxieme_quart.x][mur_vert_deuxieme_quart.y]->setMurB(1);
+   plateau[mur_hor_deuxieme_quart.x][mur_hor_deuxieme_quart.y]->setMurG(1);
+   plateau[mur_vert_deuxieme_quart.x][mur_vert_deuxieme_quart.y]->setMurB(1);
 
-    plateau[mur_hor_troisieme_quart.x][mur_hor_troisieme_quart.y]->setMurG(1);
-    plateau[mur_vert_troisieme_quart.x][mur_vert_troisieme_quart.y]->setMurB(1);
+   plateau[mur_hor_troisieme_quart.x][mur_hor_troisieme_quart.y]->setMurG(1);
+   plateau[mur_vert_troisieme_quart.x][mur_vert_troisieme_quart.y]->setMurB(1);
         
-    plateau[mur_hor_quatrieme_quart.x][mur_hor_quatrieme_quart.y]->setMurG(1);
-    plateau[mur_vert_quatrieme_quart.x][mur_vert_quatrieme_quart.y]->setMurB(1);  
+   plateau[mur_hor_quatrieme_quart.x][mur_hor_quatrieme_quart.y]->setMurG(1);
+   plateau[mur_vert_quatrieme_quart.x][mur_vert_quatrieme_quart.y]->setMurB(1);  
 }
+
+
 
