@@ -1,6 +1,6 @@
 #include "Player.hpp"
 
-Player::Player(std::string name) : name(name), score(0) {}
+Player::Player(std::string _name) : name(_name), score(0) {}
 
 void Player::addPoint(){
     score++;

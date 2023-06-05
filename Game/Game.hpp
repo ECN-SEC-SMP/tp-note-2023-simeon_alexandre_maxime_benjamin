@@ -1,6 +1,7 @@
 #pragma once 
 #include <iostream>
 #include <vector>
+#include <sstream>
 #include "string"
 #include "stdlib.h"
 
@@ -17,7 +18,7 @@ private:
     vector<Player*> joueurs;
 
 public:
-    Game(const vector<Robot>& robots, const vector<Target>& targets);
+    Game(void);
 
     void iniGame();
 

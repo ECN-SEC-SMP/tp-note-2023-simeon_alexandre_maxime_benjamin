@@ -13,7 +13,7 @@ private:
     Position prevPosition;
 
 public:
-    Robot(Color color, Position position);
+    Robot(Color _color, Position _position);
 
     Color getColor() const;
 

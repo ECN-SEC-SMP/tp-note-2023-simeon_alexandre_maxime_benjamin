@@ -1,7 +1,7 @@
 #include "Robot.hpp"
 
 
-Robot::Robot(Color color, Position position) : color(color), position(position), prevPosition(position) {}
+Robot::Robot(Color _color, Position _position) : color(_color), position(_position), prevPosition(_position) {}
 
 Color Robot::getColor() const {
     return color;
