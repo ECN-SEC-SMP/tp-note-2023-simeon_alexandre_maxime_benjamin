@@ -2,16 +2,9 @@
 #include "string"
 #include "stdlib.h"
 
+#include "../util.hpp"
 #include "../Robot/Robot.hpp"
 #include "../Target/Target.hpp"
-
-enum Angle {
-    HD,
-    BD,
-    BG,
-    HG,
-    NONE
-};
 
 class Case {
 private:

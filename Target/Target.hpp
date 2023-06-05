@@ -2,7 +2,7 @@
 #include "string"
 #include "stdlib.h"
 
-#include "../Position/Position.hpp"
+#include "../util.hpp"
 
 class Target {
 private:

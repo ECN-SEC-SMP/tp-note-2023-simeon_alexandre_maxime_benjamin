@@ -4,7 +4,7 @@
 #include "string"
 #include "stdlib.h"
 
-#include "../Position/Position.hpp"
+#include "../util.hpp"
 #include "../Robot/Robot.hpp"
 #include "../Target/Target.hpp"
 #include "../Player/Player.hpp"

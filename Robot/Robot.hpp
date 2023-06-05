@@ -2,6 +2,7 @@
 #include "string"
 #include "stdlib.h"
 
+#include "../util.hpp"
 #include "../Position/Position.hpp"
 
 
