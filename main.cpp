@@ -16,14 +16,14 @@ int main() {
     // Game g( Robot& robots, Target& targets);
     // g.iniGame(); 
     // cout << "Couleur du robot : " << robot1.getColor() << endl;
-    std::vector<Robot> robots; // Create a vector of Robot objects
-    std::vector<Target> targets; // Create a vector of Target objects
+    //std::vector<Robot> robots; // Create a vector of Robot objects
+    //std::vector<Target> targets; // Create a vector of Target objects // pour ancien constructeur de Game
 
     // Add Robot and Target objects to the vectors (example)
     // robots.push_back(Robot(/* arguments for Robot constructor */));
     // targets.push_back(Target(/* arguments for Target constructor */));
 
-    Game g(robots, targets); // Instantiate the Game object with the vectors of robots and targets
+    Game g; // Instantiate the Game object with the vectors of robots and targets
     g.iniGame();
      
 }
