@@ -8,14 +8,16 @@
 #include "../Robot/Robot.hpp"
 #include "../Target/Target.hpp"
 #include "../Player/Player.hpp"
+using namespace std;
 
 class Game {
 private:
-    std::vector<Robot> robots;
-    std::vector<Target> targets;
+    vector<Robot> robots;
+    vector<Target> targets;
+    vector<Player*> joueurs;
 
 public:
-    Game(const std::vector<Robot>& robots, const std::vector<Target>& targets);
+    Game(const vector<Robot>& robots, const vector<Target>& targets);
 
     void iniGame();
 
@@ -24,4 +26,5 @@ public:
     void moveRobot(Robot& robot, Direction direction);
 
     bool isTargetReached(const Target& target) const;
+    
 };

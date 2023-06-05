@@ -2,7 +2,6 @@
 #include "iostream"
 #include <sstream>
 #include "stdlib.h"
-using namespace std;
 
 Game::Game(const std::vector<Robot>& robots, const std::vector<Target>& targets) : robots(robots), targets(targets) {}
 void Game::iniGame(){
@@ -22,7 +21,7 @@ void Game::iniGame(){
         else nbok = true; 
     }
     unsigned nbjoueurs = atoi(signednbjoueurs.c_str()); // conversion string en unsigned 
-    vector<Player*> joueurs(nbjoueurs, nullptr);
+    // vector<Player*> joueurs(nbjoueurs, nullptr);
     for (unsigned i = 0 ; i < nbjoueurs ; i++ ) 
     {        
         bool nomsok = false; // vérifié que les prénoms ne sont pas en double
@@ -34,7 +33,7 @@ void Game::iniGame(){
                 if (nom ==  joueurs[u]->getName()) doublon = true; // si on trouve un doublon on le signal et arrête de test
             }
             if (doublon == true){ // cas où il existe un doublon 
-                cout << "nom déjà utiliser"<< endl; 
+                cout << "nom deja utiliser"<< endl; 
                 cout << "nom du joueur "<< (i+1)<< " : ";
                 cin >> nom; // on récupère le nouveau nom 
             } // une fois fini la boucle recommance au début pour tester chaques noms à nouveau 
@@ -43,9 +42,11 @@ void Game::iniGame(){
                 nomsok = true; // on signal la non présence de doublons et on stoppe la boucle 
                 }    
         } 
-        cout << "le nom retenu pour joueur " << i+1 << "est :" << nom<< endl;  
+        cout << "le nom retenu pour joueur " << i+1 << " est : " << nom<< endl;  
         Player* z = new Player(nom); // on créer un nouveau joueur 
-        joueurs[i] = z; // on ajouter l'adresse du nouveau joueur au vecteur 
+        // cout << "après z " <<  endl;
+        joueurs.push_back(z) ; // on ajouter l'adresse du nouveau joueur au vecteur 
+        // cout << "après joueurs " << endl;
     }
     cout << "fin initialisation, la partie peut commencer"<< endl; 
 }
