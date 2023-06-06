@@ -67,6 +67,9 @@ void Game::moveRobot(Robot& robot, Direction direction){
             if(plateau[robot.getPosition().getX()][robot.getPosition().getY()].getMurH()){ // teste le mur
                 blocked=true;
             }
+            else if(plateau[robot.getPosition().getX()][robot.getPosition().getY()-1].getRobot()!=nullptr){ // teste s'il y a un robot
+                blocked=true;
+            }
             else{
                 robot.setPosition(Position(robot.getPosition().getX(), robot.getPosition().getY()-1)); // déplace le robot en haut
             }
@@ -74,6 +77,9 @@ void Game::moveRobot(Robot& robot, Direction direction){
 
         case DOWN:
             if(plateau[robot.getPosition().getX()][robot.getPosition().getY()].getMurB()){ // teste le mur
+                blocked=true;
+            }
+            else if(plateau[robot.getPosition().getX()][robot.getPosition().getY()+1].getRobot()!=nullptr){ // teste s'il y a un robot
                 blocked=true;
             }
             else{
@@ -85,6 +91,9 @@ void Game::moveRobot(Robot& robot, Direction direction){
             if(plateau[robot.getPosition().getX()][robot.getPosition().getY()].getMurG()){ // teste le mur
                 blocked=true;
             }
+            else if(plateau[robot.getPosition().getX()-1][robot.getPosition().getY()].getRobot()!=nullptr){ // teste s'il y a un robot
+                blocked=true;
+            }
             else{
                 robot.setPosition(Position(robot.getPosition().getX()-1, robot.getPosition().getY())); // déplace le robot à gauche
             }
@@ -92,6 +101,9 @@ void Game::moveRobot(Robot& robot, Direction direction){
 
         default:
             if(plateau[robot.getPosition().getX()][robot.getPosition().getY()].getMurD()){ // teste le mur
+                blocked=true;
+            }
+            else if(plateau[robot.getPosition().getX()+1][robot.getPosition().getY()].getRobot()!=nullptr){ // teste s'il y a un robot
                 blocked=true;
             }
             else{
