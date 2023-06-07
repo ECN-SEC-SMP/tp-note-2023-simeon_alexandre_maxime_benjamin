@@ -20,7 +20,8 @@ private:
     vector<Robot*> robots;
     vector<Target> targets;
     vector<Player*> joueurs;
-    Robot* createRobot(Color color); 
+    Robot* createRobot(Color color);
+    array<array<Case,16>,16> plateau;  
 
 public:
     Game(void);
