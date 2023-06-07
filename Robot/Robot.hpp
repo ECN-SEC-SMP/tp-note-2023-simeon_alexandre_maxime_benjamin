@@ -19,6 +19,8 @@ public:
 
     Position getPosition() const;
 
+    Position getPrevPosition() const;
+
     void setPosition(Position newPosition);
 
     void setPrevPosition(Position newPosition);

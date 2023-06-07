@@ -98,9 +98,69 @@ void Game::playTurn() {
 }
 
 void Game::moveRobot(Robot& robot, Direction direction){
-    
+    bool blocked=false;
+    while(!blocked){
+        switch (direction)
+        {
+        case UP:
+            if(plateau[robot.getPosition().getX()][robot.getPosition().getY()].getMurH()){ // teste le mur
+                blocked=true;
+            }
+            else if(plateau[robot.getPosition().getX()][robot.getPosition().getY()-1].getRobot()!=nullptr){ // teste s'il y a un robot
+                blocked=true;
+            }
+            else{
+                robot.setPosition(Position(robot.getPosition().getX(), robot.getPosition().getY()-1)); // déplace le robot en haut
+            }
+            break;
+
+        case DOWN:
+            if(plateau[robot.getPosition().getX()][robot.getPosition().getY()].getMurB()){ // teste le mur
+                blocked=true;
+            }
+            else if(plateau[robot.getPosition().getX()][robot.getPosition().getY()+1].getRobot()!=nullptr){ // teste s'il y a un robot
+                blocked=true;
+            }
+            else{
+                robot.setPosition(Position(robot.getPosition().getX(), robot.getPosition().getY()+1)); // déplace le robot en bas
+            }
+            break;
+
+        case LEFT:
+            if(plateau[robot.getPosition().getX()][robot.getPosition().getY()].getMurG()){ // teste le mur
+                blocked=true;
+            }
+            else if(plateau[robot.getPosition().getX()-1][robot.getPosition().getY()].getRobot()!=nullptr){ // teste s'il y a un robot
+                blocked=true;
+            }
+            else{
+                robot.setPosition(Position(robot.getPosition().getX()-1, robot.getPosition().getY())); // déplace le robot à gauche
+            }
+            break;
+
+        default:
+            if(plateau[robot.getPosition().getX()][robot.getPosition().getY()].getMurD()){ // teste le mur
+                blocked=true;
+            }
+            else if(plateau[robot.getPosition().getX()+1][robot.getPosition().getY()].getRobot()!=nullptr){ // teste s'il y a un robot
+                blocked=true;
+            }
+            else{
+                robot.setPosition(Position(robot.getPosition().getX()+1, robot.getPosition().getY())); // déplace le robot à droite
+            }
+            break;
+        }
+    }
 }
 
+// Did the robot reach the target?
 bool Game::isTargetReached(const Target& target) const{
-    return true;
+    int8_t x, y;
+    x = target.getPosition().getX();
+    y = target.getPosition().getY();
+
+    if(plateau[x][y].getRobot()->getColor() == target.getColor()){
+        return true;
+    }
+    return false;
 }

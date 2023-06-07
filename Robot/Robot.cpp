@@ -11,6 +11,10 @@ Position Robot::getPosition() const {
     return position;
 }
 
+Position Robot::getPrevPosition() const {
+    return prevPosition;
+}
+
 void Robot::setPosition(Position newPosition) {
     position = newPosition;
 }

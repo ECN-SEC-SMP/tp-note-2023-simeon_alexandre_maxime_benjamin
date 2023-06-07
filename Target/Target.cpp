@@ -10,3 +10,7 @@ Color Target::getColor() const {
 Symbol Target::getSymbol() const {
     return symbol;
 }
+
+Position Target::getPosition() const {
+    return position;
+}

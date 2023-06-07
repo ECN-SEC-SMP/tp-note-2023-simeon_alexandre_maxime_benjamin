@@ -14,7 +14,10 @@ private:
 public:
     Target(Color _color, Symbol _symbol, Position _position);
 
+    // Getters
     Color getColor() const;
 
     Symbol getSymbol() const;
+    
+    Position getPosition() const;
 };
