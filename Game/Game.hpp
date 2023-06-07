@@ -4,6 +4,8 @@
 #include <sstream>
 #include "string"
 #include "stdlib.h"
+#include <time.h>
+#include <cstdlib>
 
 #include "../util.hpp"
 #include "../Robot/Robot.hpp"
@@ -13,9 +15,10 @@ using namespace std;
 
 class Game {
 private:
-    vector<Robot> robots;
+    vector<Robot*> robots;
     vector<Target> targets;
     vector<Player*> joueurs;
+    Robot* createRobot(Color color); 
 
 public:
     Game(void);

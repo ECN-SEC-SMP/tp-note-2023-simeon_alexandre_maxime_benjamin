@@ -2,6 +2,38 @@
 
 Game::Game(void) {}
 
+Robot* Game::createRobot(Color color){
+    bool posok = false;
+    Position p(0, 0);
+    srand(time(NULL));
+    while (posok == false){
+        // cout<< "entree test position"<<endl;
+        bool doublons = false;
+        int x = rand()%16;
+        int y = rand()%16;
+        while (x == 7 || x == 8){
+            x = rand()%16;
+        }
+        while (y == 7 || y == 8){
+            y = rand()%16;
+        }
+        // cout<< "sortie test centre"<<endl;
+        p.setX(x);
+        p.setY(y);
+        // cout<< "entree test superposition"<<endl;
+        for (unsigned i = 0; i < robots.size() ;i++){
+            if (p.getX() == robots[i]->getPosition().getX()) {
+                if (p.getY() == robots[i]->getPosition().getY()) doublons = true; 
+            } 
+        }
+        // cout<< "sortie superposition"<<endl;
+        if (doublons == false) posok = true; 
+    }
+    // cout<< "creation pointeur de robot"<<endl;
+    Robot* z = new Robot (color, p);
+    return z; 
+}
+
 void Game::iniGame(){
     bool nbok = false;
     string signednbjoueurs;
@@ -19,7 +51,6 @@ void Game::iniGame(){
         else nbok = true; 
     }
     unsigned nbjoueurs = atoi(signednbjoueurs.c_str()); // conversion string en unsigned 
-    // vector<Player*> joueurs(nbjoueurs, nullptr);
     for (unsigned i = 0 ; i < nbjoueurs ; i++ ) 
     {        
         bool nomsok = false; // vérifié que les prénoms ne sont pas en double
@@ -46,6 +77,14 @@ void Game::iniGame(){
         joueurs.push_back(z) ; // on ajouter l'adresse du nouveau joueur au vecteur 
         // cout << "après joueurs " << endl;
     }
+    robots.push_back(createRobot(RED)); 
+    // cout << "couleur du robot 0 : " << robots[0]->getColor() <<", position en x : " <<  robots[0]->getPosition().getX() << " et position en y : " << robots[0]->getPosition().getY() << endl; 
+    robots.push_back(createRobot(BLUE));
+    // cout << "couleur du robot 0 : " << robots[1]->getColor() <<", position en x : " <<  robots[1]->getPosition().getX() << " et position en y : " << robots[1]->getPosition().getY() << endl; 
+    robots.push_back(createRobot(YELLOW));
+    // cout << "couleur du robot 0 : " << robots[2]->getColor() <<", position en x : " <<  robots[2]->getPosition().getX() << " et position en y : " << robots[2]->getPosition().getY() << endl; 
+    robots.push_back(createRobot(GREEN));
+    // cout << "couleur du robot 0 : " << robots[3]->getColor() <<", position en x : " <<  robots[3]->getPosition().getX() << " et position en y : " << robots[3]->getPosition().getY() << endl; 
     cout << "fin initialisation, la partie peut commencer"<< endl; 
 }
 
