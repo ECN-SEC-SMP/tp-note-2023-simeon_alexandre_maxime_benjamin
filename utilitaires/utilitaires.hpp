@@ -17,3 +17,4 @@ coordonnees_mur_aleatoire mur_vertical(int cote);
 void afficher_plateau(Case* c[16][16]);
 Case *creerPlateau(Case* c[16][16]);
 void mur_aleatoire(Case* plateau[16][16]);
+void angleAleatoire(Case* plateau[16][16], quart cote);

@@ -6,14 +6,6 @@
 #include "../Robot/Robot.hpp"
 #include "../Target/Target.hpp"
 
-enum Angle {
-    HG,
-    HD,
-    BD,
-    BG,
-    NONE
-};
-
 class Case {
 private:
     bool murH, murD, murB, murG;

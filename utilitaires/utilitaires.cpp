@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include "utilitaires.hpp"
 #include "../Case/Case.hpp"
+#include "../Target/Target.hpp"
 
 using namespace std;
 
@@ -110,7 +111,7 @@ void afficher_plateau(Case* c[16][16])
 {
     for(int i=0;i<16;i++)
     {
-        cout << " ___";
+        cout << " ____";
     }
     cout << endl;
 
@@ -129,7 +130,7 @@ void afficher_plateau(Case* c[16][16])
 
 void mur_aleatoire(Case* plateau[16][16])
 {
-    coordonnees_mur_aleatoire mur_hor_premier_quart = mur_horizontale(premier_quart);
+   coordonnees_mur_aleatoire mur_hor_premier_quart = mur_horizontale(premier_quart);
    coordonnees_mur_aleatoire mur_vert_premier_quart = mur_vertical(premier_quart);
 
    coordonnees_mur_aleatoire mur_hor_deuxieme_quart = mur_horizontale(deuxieme_quart);
@@ -154,4 +155,55 @@ void mur_aleatoire(Case* plateau[16][16])
     plateau[mur_hor_quatrieme_quart.x][mur_hor_quatrieme_quart.y]->setMurG(1);
     plateau[mur_vert_quatrieme_quart.x][mur_vert_quatrieme_quart.y]->setMurB(1);  
 }
+
+void angleAleatoire(Case* plateau[16][16], quart cote)
+{
+    for(int i = 0;i < 1000000;i++){}// créer une attente pour assurer le changement de seed pour srand
+
+    int x = 0;
+    int y = 0;
+    Target* target;
+    
+
+    switch(cote){
+    case premier_quart:         
+        srand( time( NULL ) );
+        x = 1 + rand() % 6;
+        srand( time( NULL ) );
+        for(int i = 0;i < 10000000;i++){}
+        y = 1 + rand() % 6;
+    break;
+    case deuxieme_quart:
+        srand( time( NULL ) );
+        x = rand() % 8 + 7;
+        srand( time( NULL ) );
+        for(int i = 0;i < 10000000;i++){}
+        y = 1 + rand() % 6;     
+    break;
+    case troisieme_quart:
+        srand( time( NULL ) );
+        x = rand() % 8 + 7;
+        srand( time( NULL ) );
+        for(int i = 0;i < 10000000;i++){}
+        y = rand() % 8 + 7;    
+    break;
+    case quatrieme_quart:
+        srand( time( NULL ) );
+        x = 1 + rand() % 6;
+        srand( time( NULL ) );
+        for(int i = 0;i < 10000000;i++){}
+        y = rand() % 8 + 7;    
+    break;  
+    default:
+        x = 0;
+        y = 0;  
+    } 
+
+    plateau[x][y]->setAngle();
+    target = new Target(YELLOW,DIAMOND,Position(y,x));
+    plateau[x][y]->setTarget(target);
+}
+
+
+
 
