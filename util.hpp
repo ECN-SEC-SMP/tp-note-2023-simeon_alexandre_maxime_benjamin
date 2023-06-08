@@ -1,8 +1,10 @@
+#pragma once
 enum Color {
     RED,
     YELLOW,
     BLUE,
-    GREEN
+    GREEN,
+    MULTICOLOR
 };
 
 enum Symbol {
@@ -10,7 +12,6 @@ enum Symbol {
     SQUARE,
     TRIANGLE,
     DIAMOND,
-    MULTICOLOR
 };
 
 enum Direction {

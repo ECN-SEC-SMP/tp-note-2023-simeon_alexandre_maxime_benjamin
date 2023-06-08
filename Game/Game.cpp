@@ -3,7 +3,7 @@
 #include <sstream>
 #include "stdlib.h"
 
-Game::Game(const std::vector<Robot>& robots, const std::vector<Target>& targets) : robots(robots), targets(targets) {}
+Game::Game(const std::vector<Robot>& robots, const std::vector<Target>& targets) : robots(robots), targets(targets), currentTour(0) {}
 void Game::iniGame(){
     bool nbok = false;
     string signednbjoueurs;

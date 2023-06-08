@@ -15,6 +15,7 @@ private:
     vector<Robot> robots;
     vector<Target> targets;
     vector<Player*> joueurs;
+    int currentTour;
 
 public:
     Game(const vector<Robot>& robots, const vector<Target>& targets);
