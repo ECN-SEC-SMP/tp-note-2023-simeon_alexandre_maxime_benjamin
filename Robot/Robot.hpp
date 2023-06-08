@@ -6,7 +6,6 @@
 
 using namespace std;
 
-
 class Robot {
 private:
     Color color;
@@ -15,13 +14,13 @@ private:
 
 public:
     Robot(Color _color, Position _position);
-    
 
     Color getColor() const;
 
     Position getPosition() const;
-    Position getPrevPosition()const; 
-
+    
+    Position getPrevPosition()const;
+    
     void setPosition(Position newPosition);
 
     void setPrevPosition(Position newPosition);

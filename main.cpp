@@ -3,8 +3,11 @@
 #include "Position/Position.hpp"
 #include "Robot/Robot.hpp"
 #include "Target/Target.hpp"
+
 #include "Case/Case.hpp"
+#include "util.hpp" // test
 #include "utilitaires/utilitaires.hpp"
+
 
 using namespace std;
 
@@ -16,6 +19,7 @@ int main() {
     // Robot* r_blue;
     // Robot* r_yellow;
     // Robot* r_green;
+
 
     // Target* target;
 
@@ -63,5 +67,11 @@ int main() {
     // plateau[4][4]->setTarget(target);
     //afficher plateau
     afficher_plateau(plateau);
+
+    Game g;
+    g.iniGame(); // Instantiate the Game object with the vectors of robots and targets
+    // g.iniGame();
+    // for (int i =  0, i = Color.getvalue())
+
      
 }

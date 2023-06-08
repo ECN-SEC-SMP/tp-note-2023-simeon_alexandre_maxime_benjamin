@@ -9,7 +9,7 @@ private:
     unsigned char score;
 
 public:
-    Player(string name);
+    Player(string _name);
     void addPoint(void);
     string getName(void) const;
     unsigned char getScore(void) const;
