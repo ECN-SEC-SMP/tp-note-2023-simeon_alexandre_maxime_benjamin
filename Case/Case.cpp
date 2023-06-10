@@ -30,7 +30,7 @@ void Case::setMurG(bool mur){ murG = mur; }
 void Case::setAngle()
 {
     // créer une attente pour assurer le changement de seed pour srand
-    srand( time( 0) );
+    //srand( time( 0) );
     int id = 0;
     for(int i = 0;i < 10000000;i++){}   
     
@@ -80,17 +80,21 @@ void Case::setTarget(Target* newTarget) { target = newTarget; }
 
 void Case::affichage_case(Case* c[16][16], int x, int y)
 {
+    
+    
     c[7][7]->murG = 1;
-    c[7][7]->murH = 1;
+    c[8][7]->murG = 1;
 
-    c[8][8]->murD = 1;
+    c[8][7]->murB = 1; 
     c[8][8]->murB = 1;
 
-    c[8][7]->murG = 1;
-    c[8][7]->murB = 1;   
+    c[7][8]->murD = 1;
 
-    c[8][7]->murH = 1;
-    c[8][7]->murD = 1;
+    c[6][8]->murH = 1;
+    c[6][9]->murH = 1; 
+
+    c[7][9]->murG = 1; 
+    c[8][9]->murG = 1;
 
     for(int i=0;i<16;i++)
     {
@@ -98,9 +102,9 @@ void Case::affichage_case(Case* c[16][16], int x, int y)
           c[15][i]->murB = 1;
     }  
        
-    if((this->murG == 0 && this->murB == 1) || (y<14 && this->murG == 0 &&  c[x][y+1]->getMurH()== 1))
+    if((this->murG == 0 && this->murB == 1) || (x<14 && this->murG == 0 &&  c[y][x+1]->getMurH()== 1))
     {
-        if(this->robot != nullptr && this->robot->getPosition().getX() == x && this->robot->getPosition().getY() == y)
+        if(this->robot != nullptr && this->robot->getPosition().getX() == y && this->robot->getPosition().getY() == x)
         {
             cout << ":_" << this->robot->getColor() << "_";
         }
@@ -114,7 +118,7 @@ void Case::affichage_case(Case* c[16][16], int x, int y)
         }
         
     }
-    else if((this->murG == 1 && this->murB == 0) || (x>0 && c[x-1][y]->getMurD() == 1 && this->murB == 0))
+    else if((this->murG == 1 && this->murB == 0) || (y>0 && c[y-1][x]->getMurD() == 1 && this->murB == 0))
     {
         if(this->robot != nullptr && this->robot->getPosition().getX() == y && this->robot->getPosition().getY() == x)
         {

@@ -164,3 +164,205 @@ bool Game::isTargetReached(const Target& target) const{
     }
     return false;
 }
+
+Position Game::mur_exterieur_horizontale(int cote)
+{
+
+    
+    for(int i = 0;i < 100000000;i++){}// créer une attente pour assurer le changement de seed pour srand
+    
+    Position mur_hor(0,0);
+    switch(cote){
+    case 0:         
+        srand( time( NULL ) );
+        mur_hor.setX(0);
+        mur_hor.setY(0);
+        mur_hor.setY(1 + rand() % 6);
+    break;
+    case 1:
+        srand( time( NULL ) );
+        mur_hor.setX(15);
+        mur_hor.setY(0);
+        mur_hor.setY(1 + rand() % 6);    
+    break;
+    case 2:
+        srand( time( NULL ) );
+        mur_hor.setX(15);
+        mur_hor.setY(0);
+        mur_hor.setY(rand() % 9 + 6);    
+    break;
+    case 3:
+        srand( time( NULL ) );
+        mur_hor.setX(0);
+        mur_hor.setY(0);
+        mur_hor.setY(rand() % 9 + 6);    
+    break;
+
+    default:
+        mur_hor.setX(0);
+        mur_hor.setY(0);            
+  }  
+   
+   return mur_hor;
+}
+
+Position Game::mur_exterieur_vertical(int cote)
+{
+    
+    for(int i = 0;i < 10000000;i++){}// créer une attente pour assurer le changement de seed pour srand
+    Position mur(0,0);
+    switch(cote){
+    case premier_quart:         
+        srand( time( NULL ) );
+        mur.setY(0);
+        mur.setX(0);
+        mur.setX(1 + rand() % 7);
+    break;
+    case deuxieme_quart:
+        srand( time( NULL ) );
+        mur.setY(0);
+        mur.setX(0);
+        mur.setX(rand() % 9 + 7);    
+    break;
+    case troisieme_quart:
+        srand( time( NULL ) );
+        mur.setY(15);
+        mur.setX(0);
+        mur.setX(rand() % 9 + 7);    
+    break;
+    case quatrieme_quart:
+        srand( time( NULL ) );
+        mur.setY(15);
+        mur.setX(0);
+        mur.setX(1 + rand() % 7);    
+    break;  
+    default:
+        mur.setX(0);
+        mur.setY(0);     
+
+  }  
+
+  return mur; 
+}
+
+Case* Game::creerPlateau(Case* c[16][16])
+{    
+    for(int i=0;i<16;i++)
+    {
+        for(int j=0; j<16;j++)
+        {            
+            c[i][j] = new Case();                 
+          
+        }
+    }
+
+    return c[16][16];
+}
+
+void Game::afficher_plateau(Case* c[16][16])
+{
+    for(int i=0;i<16;i++)
+    {
+        cout << " ____";
+    }
+    cout << endl;
+
+   for(int y=0;y<16;y++)
+    {
+        for(int x=0; x<16;x++)
+        {  
+            c[y][x]->affichage_case(c,x,y);
+            
+        }
+        cout << "|" << endl;
+        
+    }
+}
+
+
+void Game::plateauInit(Case* plateau[16][16])
+{
+    //generer mur exterieur
+   for(int quart = premier_quart;quart <= quatrieme_quart; quart++)
+   {
+        Position premier_quart_horiz = mur_exterieur_horizontale(quart);
+        for(int i = 0;i < 1000000000;i++){}
+        Position premier_quart_vert = mur_exterieur_vertical(quart);
+
+        plateau[premier_quart_horiz.getX()][premier_quart_horiz.getY()]->setMurG(1);
+        plateau[premier_quart_vert.getX()][premier_quart_vert.getY()]->setMurB(1);
+   }  
+
+   //generer mur interieur
+    for(int quart = premier_quart;quart<=quatrieme_quart;quart++)
+    {
+        for(int i = 0;i<4;i++)
+        {
+            for(int i = 0;i < 100000000;i++){}
+            murInterieur(plateau,quart);          
+        }
+        cout << endl;
+    }   
+}
+
+void Game::murInterieur(Case* plateau[16][16], int cote)
+{
+    for(int i = 0;i < 10000000;i++){}// créer une attente pour assurer le changement de seed pour srand
+    //srand( time( NULL ) );
+    int x = 0;
+    int y = 0;
+    switch(cote){
+    case premier_quart:         
+
+        x = 2 + rand() % 5;
+        for(int i = 0;i < 1000000;i++){}
+        //srand( time( NULL ) );
+        y = 2 + rand() % 5;
+    break;
+    case deuxieme_quart:
+        
+        x =rand() % 6 + 9;
+        for(int i = 0;i < 1000000;i++){}
+        //srand( time( NULL ) );
+        y = 2 + rand() % 5; 
+
+    break;
+    case troisieme_quart:
+        x = rand() % 5 + 10;
+        for(int i = 0;i < 1000000;i++){}
+        y = rand() % 5 + 9; 
+          
+    break;
+    case quatrieme_quart:
+        x = 2 + rand() % 5;
+        for(int i = 0;i < 1000000;i++){}
+        //srand( time( NULL ) );
+        y = rand() % 5 + 9; 
+          
+    break;  
+    default:
+        x=0;
+        y=0;  
+    } 
+    
+
+    if(plateau[y][x]->getAngle() == NONE
+    
+        && plateau[y-1][x-1]->getAngle() == NONE && plateau[y-1][x+1]->getAngle() == NONE
+        && plateau[y+1][x+1]->getAngle() == NONE && plateau[y+1][x-1]->getAngle() == NONE
+        && plateau[y][x+1]->getAngle() == NONE && plateau[y][x-1]->getAngle() == NONE
+        && plateau[y-1][x]->getAngle() == NONE && plateau[y+1][x]->getAngle() == NONE
+
+        && plateau[y][x-1]->getAngle() == NONE && plateau[y][x+1]->getAngle() == NONE
+        && plateau[y+1][x]->getAngle() == NONE && plateau[y-1][x]->getAngle() == NONE     
+
+        && plateau[y][x]->getAngle() == NONE)
+    {
+        plateau[y][x]->setAngle();
+    }
+    else
+    {
+        murInterieur(plateau,cote);
+    }
+
+}
