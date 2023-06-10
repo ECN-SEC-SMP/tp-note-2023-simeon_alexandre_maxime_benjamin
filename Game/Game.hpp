@@ -34,9 +34,9 @@ public:
 
     bool isTargetReached(const Target& target) const;
 
-    Position mur_exterieur_horizontale(int cote);
+    Position mur_exterieur_horizontale(int quart_plateau);
 
-    Position mur_exterieur_vertical(int cote);
+    Position mur_exterieur_vertical(int quart_plateau);
 
     void afficher_plateau(Case* c[16][16]);
 
@@ -44,7 +44,7 @@ public:
 
     void plateauInit(Case* plateau[16][16]);
     
-    void murInterieur(Case* plateau[16][16], int cote);
+    void murInterieur(Case* plateau[16][16], int quart_plateau);
     
 };
 

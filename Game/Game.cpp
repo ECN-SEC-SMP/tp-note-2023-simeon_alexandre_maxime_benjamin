@@ -165,14 +165,14 @@ bool Game::isTargetReached(const Target& target) const{
     return false;
 }
 
-Position Game::mur_exterieur_horizontale(int cote)
+Position Game::mur_exterieur_horizontale(int quart_plateau)
 {
 
     
     for(int i = 0;i < 100000000;i++){}// créer une attente pour assurer le changement de seed pour srand
     
     Position mur_hor(0,0);
-    switch(cote){
+    switch(quart_plateau){
     case 0:         
         srand( time( NULL ) );
         mur_hor.setX(0);
@@ -206,12 +206,12 @@ Position Game::mur_exterieur_horizontale(int cote)
    return mur_hor;
 }
 
-Position Game::mur_exterieur_vertical(int cote)
+Position Game::mur_exterieur_vertical(int quart_plateau)
 {
     
     for(int i = 0;i < 10000000;i++){}// créer une attente pour assurer le changement de seed pour srand
     Position mur(0,0);
-    switch(cote){
+    switch(quart_plateau){
     case premier_quart:         
         srand( time( NULL ) );
         mur.setY(0);
@@ -283,35 +283,35 @@ void Game::afficher_plateau(Case* c[16][16])
 void Game::plateauInit(Case* plateau[16][16])
 {
     //generer mur exterieur
-   for(int quart = premier_quart;quart <= quatrieme_quart; quart++)
+   for(int quart_plateau = premier_quart;quart_plateau <= quatrieme_quart; quart_plateau++)
    {
-        Position premier_quart_horiz = mur_exterieur_horizontale(quart);
+        Position premier_quart_horiz = mur_exterieur_horizontale(quart_plateau);
         for(int i = 0;i < 1000000000;i++){}
-        Position premier_quart_vert = mur_exterieur_vertical(quart);
+        Position premier_quart_vert = mur_exterieur_vertical(quart_plateau);
 
         plateau[premier_quart_horiz.getX()][premier_quart_horiz.getY()]->setMurG(1);
         plateau[premier_quart_vert.getX()][premier_quart_vert.getY()]->setMurB(1);
    }  
 
    //generer mur interieur
-    for(int quart = premier_quart;quart<=quatrieme_quart;quart++)
+    for(int quart_plateau = premier_quart;quart_plateau<=quatrieme_quart;quart_plateau++)
     {
         for(int i = 0;i<4;i++)
         {
             for(int i = 0;i < 100000000;i++){}
-            murInterieur(plateau,quart);          
+            murInterieur(plateau,quart_plateau);          
         }
         cout << endl;
     }   
 }
 
-void Game::murInterieur(Case* plateau[16][16], int cote)
+void Game::murInterieur(Case* plateau[16][16], int quart_plateau)
 {
     for(int i = 0;i < 10000000;i++){}// créer une attente pour assurer le changement de seed pour srand
     //srand( time( NULL ) );
     int x = 0;
     int y = 0;
-    switch(cote){
+    switch(quart_plateau){
     case premier_quart:         
 
         x = 2 + rand() % 5;
@@ -362,7 +362,7 @@ void Game::murInterieur(Case* plateau[16][16], int cote)
     }
     else
     {
-        murInterieur(plateau,cote);
+        murInterieur(plateau,quart_plateau);
     }
 
 }
