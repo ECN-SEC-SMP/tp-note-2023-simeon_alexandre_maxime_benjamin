@@ -293,76 +293,135 @@ void Game::plateauInit(Case* plateau[16][16])
         plateau[premier_quart_vert.getX()][premier_quart_vert.getY()]->setMurB(1);
    }  
 
-   //generer mur interieur
+   //generer mur interieur et leur cible
     for(int quart_plateau = premier_quart;quart_plateau<=quatrieme_quart;quart_plateau++)
     {
+        Symbol symbolTarget;
         for(int i = 0;i<4;i++)
         {
+            if(i == 0)
+            {
+                symbolTarget  = TRIANGLE;
+            }
+            else if(i == 1)
+            {
+                symbolTarget  = CIRCLE;
+            } 
+            else if(i == 2)
+            {
+                symbolTarget  = SQUARE;
+            }   
+            else if(i == 3)
+            {
+                symbolTarget  = DIAMOND;
+            }                         
             for(int i = 0;i < 100000000;i++){}
-            murInterieur(plateau,quart_plateau);          
-        }
+            murInterieur(plateau,quart_plateau,symbolTarget);          
+        }        
         cout << endl;
-    }   
+    } 
+
+            //generer robot
+        genererRobot(plateau,RED);
+        genererRobot(plateau,BLUE);
+        genererRobot(plateau,YELLOW);
+        genererRobot(plateau,GREEN);
+    
 }
 
-void Game::murInterieur(Case* plateau[16][16], int quart_plateau)
+void Game::murInterieur(Case* plateau[16][16], int quart_plateau,Symbol symbolTarget)
 {
+    //Target
+   int c = 0;
+    Color couleur;
+    c = rand() % 5;
+    switch(c){
+        case 0:
+            couleur = RED;
+        break;
+        case 1:
+            couleur = YELLOW;
+        break;  
+        case 2:
+            couleur = BLUE;
+        break;
+        case 3:
+            couleur = GREEN;
+        break;  
+        default :
+            couleur  = MULTICOLOR;            
+    } 
+
+    //mur interieur    
     for(int i = 0;i < 10000000;i++){}// créer une attente pour assurer le changement de seed pour srand
-    //srand( time( NULL ) );
-    int x = 0;
-    int y = 0;
+    Position p(0,0);
     switch(quart_plateau){
     case premier_quart:         
 
-        x = 2 + rand() % 5;
+        p.setX(2 + rand() % 5);
         for(int i = 0;i < 1000000;i++){}
-        //srand( time( NULL ) );
-        y = 2 + rand() % 5;
+        p.setY(2 + rand() % 5);
     break;
     case deuxieme_quart:
         
-        x =rand() % 6 + 9;
+        p.setX(rand() % 6 + 9);
         for(int i = 0;i < 1000000;i++){}
-        //srand( time( NULL ) );
-        y = 2 + rand() % 5; 
+        p.setY(2 + rand() % 5); 
 
     break;
     case troisieme_quart:
-        x = rand() % 5 + 10;
+        p.setX(rand() % 5 + 10);
         for(int i = 0;i < 1000000;i++){}
-        y = rand() % 5 + 9; 
+        p.setY(rand() % 5 + 9); 
           
     break;
     case quatrieme_quart:
-        x = 2 + rand() % 5;
+        p.setX(2 + rand() % 5);
         for(int i = 0;i < 1000000;i++){}
-        //srand( time( NULL ) );
-        y = rand() % 5 + 9; 
+        p.setY(rand() % 5 + 9); 
           
     break;  
     default:
-        x=0;
-        y=0;  
-    } 
+        p.setX(0);
+        p.setY(0);  
+    }     
+
+    if(plateau[p.getY()][p.getX()]->getAngle() == NONE
     
+        && plateau[p.getY()-1][p.getX()-1]->getAngle() == NONE && plateau[p.getY()-1][p.getX()+1]->getAngle() == NONE
+        && plateau[p.getY()+1][p.getX()+1]->getAngle() == NONE && plateau[p.getY()+1][p.getX()-1]->getAngle() == NONE
+        && plateau[p.getY()][p.getX()+1]->getAngle() == NONE && plateau[p.getY()][p.getX()-1]->getAngle() == NONE
+        && plateau[p.getY()-1][p.getX()]->getAngle() == NONE && plateau[p.getY()+1][p.getX()]->getAngle() == NONE
 
-    if(plateau[y][x]->getAngle() == NONE
-    
-        && plateau[y-1][x-1]->getAngle() == NONE && plateau[y-1][x+1]->getAngle() == NONE
-        && plateau[y+1][x+1]->getAngle() == NONE && plateau[y+1][x-1]->getAngle() == NONE
-        && plateau[y][x+1]->getAngle() == NONE && plateau[y][x-1]->getAngle() == NONE
-        && plateau[y-1][x]->getAngle() == NONE && plateau[y+1][x]->getAngle() == NONE
+        && plateau[p.getY()][p.getX()-1]->getAngle() == NONE && plateau[p.getY()][p.getX()+1]->getAngle() == NONE
+        && plateau[p.getY()+1][p.getX()]->getAngle() == NONE && plateau[p.getY()-1][p.getX()]->getAngle() == NONE     
 
-        && plateau[y][x-1]->getAngle() == NONE && plateau[y][x+1]->getAngle() == NONE
-        && plateau[y+1][x]->getAngle() == NONE && plateau[y-1][x]->getAngle() == NONE     
-
-        && plateau[y][x]->getAngle() == NONE)
+        && plateau[p.getY()][p.getX()]->getAngle() == NONE)
     {
-        plateau[y][x]->setAngle();
+        plateau[p.getY()][p.getX()]->setAngle();
+        Target* newTarget = new Target(couleur,symbolTarget,p); 
+        plateau[p.getY()][p.getX()]->setTarget(newTarget);            
     }
     else
     {
-        murInterieur(plateau,quart_plateau);
-    }
+        murInterieur(plateau,quart_plateau,symbolTarget);
 
+    }      
+
+}
+
+void Game::genererRobot(Case* plateau[16][16],Color _color)
+{
+    Position p(0,0);
+    p.setX(rand() % 15);
+    p.setY(rand() % 15);
+
+    if((p.getX()==7 && p.getX()==7) || (p.getX()==7 && p.getX()==8) || (p.getX()==8 && p.getX()==8) || (p.getX()==8 && p.getX()==7))
+    {
+        genererRobot(plateau,_color);
+    }
+    else{
+        Robot* r = new Robot(_color,p);
+        plateau[p.getY()][p.getX()]->setRobot(r);
+    }
 }

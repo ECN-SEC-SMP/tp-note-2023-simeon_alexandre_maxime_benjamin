@@ -6,19 +6,18 @@
 
 #include "Case/Case.hpp"
 #include "util.hpp" // test
-#include "utilitaires/utilitaires.hpp"
+
+
 
 
 using namespace std;
 
 int main() { 
 
-    srand( time( NULL ) );
-
+    srand( time( NULL ) );  
     Case* plateau[16][16] = {nullptr}; 
     Game g;
-
-    g.iniGame(); // Instantiate the Game object with the vectors of robots and targets
+    //g.iniGame(); // Instantiate the Game object with the vectors of robots and targets
     //g.iniGame();
     //for (int i =  0, i = Color.getvalue());
 

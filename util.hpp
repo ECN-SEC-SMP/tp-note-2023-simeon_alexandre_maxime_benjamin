@@ -30,7 +30,7 @@ enum Angle {
     NONE
 };
 
-enum quart_plateau{
+enum quartPlateau{
     premier_quart, //haut gauche
     deuxieme_quart, //haut droit
     troisieme_quart, //bas droit

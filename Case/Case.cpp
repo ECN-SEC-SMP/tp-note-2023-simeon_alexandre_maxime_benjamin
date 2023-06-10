@@ -38,32 +38,32 @@ void Case::setAngle()
 
     switch(id){
         case 0 :
-            this->angle = HG;
-            this->murG = 1;
-            this->murH = 1; 
-            this->murD = 0;
-            this->murB = 0;            
-        break;
-        case 1 : 
             this->angle = HD;
             this->murG = 0;
             this->murH = 1; 
             this->murD = 1;
-            this->murB = 0;             
+            this->murB = 0;            
         break;
-        case 2:
+        case 1 : 
             this->angle = BD;
             this->murG = 0;
             this->murH = 0; 
             this->murD = 1;
             this->murB = 1;             
         break;
-        case 3:
+        case 2:
             this->angle = BG;
             this->murG = 1;
             this->murH = 0; 
             this->murD = 0;
             this->murB = 1;             
+        break;
+        case 3:
+            this->angle = HG;
+            this->murG = 1;
+            this->murH = 1; 
+            this->murD = 0;
+            this->murB = 0;             
         break;
         default :
             this->angle = NONE;
@@ -83,18 +83,17 @@ void Case::affichage_case(Case* c[16][16], int x, int y)
     
     
     c[7][7]->murG = 1;
+    c[7][7]->murH = 1;
+
     c[8][7]->murG = 1;
+    c[8][7]->murB = 1;
 
-    c[8][7]->murB = 1; 
-    c[8][8]->murB = 1;
-
+    c[7][8]->murH = 1;
     c[7][8]->murD = 1;
 
-    c[6][8]->murH = 1;
-    c[6][9]->murH = 1; 
-
-    c[7][9]->murG = 1; 
-    c[8][9]->murG = 1;
+    c[8][8]->murD = 1;
+    c[8][8]->murB = 1; 
+ 
 
     for(int i=0;i<16;i++)
     {
@@ -102,15 +101,16 @@ void Case::affichage_case(Case* c[16][16], int x, int y)
           c[15][i]->murB = 1;
     }  
        
-    if((this->murG == 0 && this->murB == 1) || (x<14 && this->murG == 0 &&  c[y][x+1]->getMurH()== 1))
+    if((this->murG == 0 && this->murB == 1) || (y<14 && this->murG == 0 &&  c[y+1][x]->getMurH()== 1))
     {
-        if(this->robot != nullptr && this->robot->getPosition().getX() == y && this->robot->getPosition().getY() == x)
+        if(this->target == nullptr && this->robot != nullptr)
         {
-            cout << ":_" << this->robot->getColor() << "_";
+            cout << ":" << this->robot->getCaractereColorRobot() << "";
         }
-        else if(this->target != nullptr && this->target->getPosition().getX() == y && this->target->getPosition().getY() == y)
+        else if(this->target != nullptr)
         {
             cout << ":_" << this->target->getCaracteresTarget() << "_";
+            
         }
         else
         {
@@ -118,15 +118,16 @@ void Case::affichage_case(Case* c[16][16], int x, int y)
         }
         
     }
-    else if((this->murG == 1 && this->murB == 0) || (y>0 && c[y-1][x]->getMurD() == 1 && this->murB == 0))
+    else if((this->murG == 1 && this->murB == 0) || (x>0 && c[y][x-1]->getMurD() == 1 && this->murB == 0))
     {
-        if(this->robot != nullptr && this->robot->getPosition().getX() == y && this->robot->getPosition().getY() == x)
+        if(this->target == nullptr && this->robot != nullptr)
         {
-            cout << "|." << this->robot->getCaractereColorRobot() << ".";
+            cout << "|" << this->robot->getCaractereColorRobot() << "";
         }
-       else if(this->target != nullptr && this->target->getPosition().getX() == y && this->target->getPosition().getY() == y)
+       else if(this->target != nullptr)
         {
             cout << "|." << this->target->getCaracteresTarget() << ".";
+            
         }        
         else
         {        
@@ -135,13 +136,14 @@ void Case::affichage_case(Case* c[16][16], int x, int y)
     }
     else if((this->murG == 1 && this->murB == 1))
     {
-        if(this->robot != nullptr && this->robot->getPosition().getX() == y && this->robot->getPosition().getY() == x) 
+        if(this->target == nullptr && this->robot != nullptr) 
         {
-            cout << "|_" << this->robot->getCaractereColorRobot() << "_";
+            cout << "|" << this->robot->getCaractereColorRobot() << "";
         }
-       else if(this->target != nullptr && this->target->getPosition().getX() == y && this->target->getPosition().getY() == y)
+       else if(this->target != nullptr)
         {
             cout << "|_" << this->target->getCaracteresTarget() << "_";
+            
         }        
         else
         {        
@@ -150,15 +152,15 @@ void Case::affichage_case(Case* c[16][16], int x, int y)
     }
     else
     {
-        if(this->robot != nullptr && this->robot->getPosition().getX() == y && this->robot->getPosition().getY() == x)
+        if(this->robot != nullptr)
         {
-            cout << ":." << this->robot->getCaractereColorRobot() << ".";
+            cout << ":" << this->robot->getCaractereColorRobot() << "";
         }
-       else if(this->target != nullptr && this->target->getPosition().getX() == y && this->target->getPosition().getY() == y)
+       else if(this->target != nullptr)
         {
             cout << ":." << this->target->getCaracteresTarget() << ".";
         }
-        else
+        else if(this->robot == nullptr || this->robot->getPosition().getX() != y || this->robot->getPosition().getY() != x)
         {        
             cout << ":....";
         }    

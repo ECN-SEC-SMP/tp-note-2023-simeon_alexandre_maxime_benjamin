@@ -44,7 +44,9 @@ public:
 
     void plateauInit(Case* plateau[16][16]);
     
-    void murInterieur(Case* plateau[16][16], int quart_plateau);
+    void murInterieur(Case* plateau[16][16], int quart_plateau, Symbol symbolTarget);
+
+    void genererRobot(Case* plateau[16][16],Color _color);
     
 };
 

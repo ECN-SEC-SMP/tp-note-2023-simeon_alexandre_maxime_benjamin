@@ -29,21 +29,21 @@ std::string Robot::getCaractereColorRobot()const
 {
     switch(this->color){
     case (RED):
-        return "RR";
+        return "(RR)";
     break;
     case (YELLOW):
-        return "RY";
+        return "(RY)";
     break;  
     case (BLUE):
-        return "RB";
+        return "(RB)";
     break;  
     case (GREEN):
-        return "RG";
+        return "(RG)";
     break;  
     case (MULTICOLOR):
-        return "RM";
+        return "(RM)";
     break;    
     }
 
-    return 0;
+    return "....";
 }
