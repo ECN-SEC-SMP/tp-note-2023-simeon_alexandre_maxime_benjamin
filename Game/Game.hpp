@@ -52,11 +52,9 @@ public:
 
     void plateauInit(Case* plateau[16][16]);
     
-    Target* murInterieur(Case* plateau[16][16], int quart_plateau,Symbol symbolTarget,vector <Color> color);
+   void murInterieur(Case* plateau[16][16], int quart_plateau);
 
     void genererRobot(Case* plateau[16][16],Color _color);
-
-    Color genererCouleurAleatoire(int quart, Case* plateau[16][16], vector <Color>);
 
     void generer17emeTarget(Case* plateau[16][16]);
     
