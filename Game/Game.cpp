@@ -381,30 +381,9 @@ void Game::afficher_plateau(Case* c[16][16])//affiche les 16 cases du plateau
     }
 }
 
-
 void Game::plateauInit(Case* plateau[16][16])
 {  
-    //Target* cible; 
 
-   colorPremierQuart.push_back(RED);
-   colorPremierQuart.push_back(YELLOW);
-   colorPremierQuart.push_back(BLUE);
-   colorPremierQuart.push_back(GREEN);
-
-   colorDeuxiemeQuart.push_back(RED);
-   colorDeuxiemeQuart.push_back(YELLOW);
-   colorDeuxiemeQuart.push_back(BLUE);
-   colorDeuxiemeQuart.push_back(GREEN);
-
-   colorTroisiemeQuart.push_back(RED);
-   colorTroisiemeQuart.push_back(YELLOW);
-   colorTroisiemeQuart.push_back(BLUE);
-   colorTroisiemeQuart.push_back(GREEN);
-
-   colorQuatriemeQuart.push_back(RED);
-   colorQuatriemeQuart.push_back(YELLOW);
-   colorQuatriemeQuart.push_back(BLUE);
-   colorQuatriemeQuart.push_back(GREEN);
     //generer mur exterieur pour les 4 quart du plateau
    for(int quart_plateau = premier_quart;quart_plateau <= quatrieme_quart; quart_plateau++)
    {
@@ -419,46 +398,10 @@ void Game::plateauInit(Case* plateau[16][16])
    //generer mur interieur et leur cible pour chaque quart
     for(int quart_plateau = premier_quart;quart_plateau<=quatrieme_quart;quart_plateau++)
     {
-        Symbol symbolTarget;
-
         for(int i = 0;i<4;i++)//gener quatre mur interieur
         {
-            //une forme par quart
-            if(i == 0)
-            {
-                symbolTarget  = TRIANGLE;
-            }
-            else if(i == 1)
-            {
-                symbolTarget  = CIRCLE;
-            } 
-            else if(i == 2)
-            {
-                symbolTarget  = SQUARE;
-            }   
-            else if(i == 3)
-            {
-                symbolTarget  = DIAMOND;
-            }    
-
             for(int i = 0;i < 100000000;i++){}
-            /*cible =*/ murInterieur(plateau,quart_plateau,symbolTarget,colorPremierQuart);//cree le mur interieur  
-            /*if(cible->getColor() == RED)
-            {
-                colorPremierQuart.erase(colorPremierQuart.begin());
-            }
-            else if(cible->getColor() == YELLOW)
-            {
-                colorPremierQuart.erase(colorPremierQuart.begin()+1);
-            }  
-            else if(cible->getColor() == BLUE)
-            {
-                colorPremierQuart.erase(colorPremierQuart.begin()+2);
-            }   
-            else if(cible->getColor() == GREEN)
-            {
-                colorPremierQuart.erase(colorPremierQuart.begin()+3);
-            }  */                             
+            murInterieur(plateau,quart_plateau);//cree le mur interieur                               
          }        
          cout << endl;
 //             
@@ -468,11 +411,8 @@ void Game::plateauInit(Case* plateau[16][16])
 
 }
 
-Target* Game::murInterieur(Case* plateau[16][16], int quart_plateau,Symbol symbolTarget,vector <Color> color)//genere mur interieur avec ca cible
+void Game::murInterieur(Case* plateau[16][16], int quart_plateau)//genere mur interieur avec ca cible
 {
-
-
-    Color couleur = genererCouleurAleatoire(quart_plateau,plateau,color);
 
     //genere position aleatoire mur interieur    
     for(int i = 0;i < 10000000;i++){}
@@ -529,44 +469,12 @@ Target* Game::murInterieur(Case* plateau[16][16], int quart_plateau,Symbol symbo
     }
     else
     {
-        murInterieur(plateau,quart_plateau,symbolTarget,color);//si il y a un angle trop proche, rappel de la fonction
+        murInterieur(plateau,quart_plateau);//si il y a un angle trop proche, rappel de la fonction
 
     }  
 
-    Target* t = new Target(GREEN,DIAMOND,Position(0,0));
-    t->getPosition();
-
-    return t;
-
 }
 
-Color Game::genererCouleurAleatoire(int quart, Case* plateau[16][16], vector <Color> color)
-{
-     
-   int c = 0;
-   Color couleur;
-   c = rand() % (color.size());// 5 choix de couleur entre 0 et 4
-   couleur = color[c];
-   
-
-    for(int y=0;y<8;y++)
-    {
-        for(int x=0;x<8;x++)
-        {
-            if(plateau[x][y]->getTarget() != nullptr && plateau[y][x]->getTarget()->getColor() == couleur)
-            {
-                for(int i = 0;i < 1000000;i++){}
-                genererCouleurAleatoire(quart,plateau,color);
-            }
-            else
-            {
-                return couleur;
-            }
-        }
-    }
-
-    return couleur;
-}
 
 void Game::generer17emeTarget(Case* plateau[16][16])
 {
@@ -580,11 +488,7 @@ void Game::generer17emeTarget(Case* plateau[16][16])
     }
     else
     {
-        Target* t = new Target(MULTICOLOR,DIAMOND,p);
-        targets.push_back(t); 
         plateau[p.getY()][p.getX()]->setAngle();
-        plateau[p.getY()][p.getX()]->setTarget(t);
     }
-
 
 }
