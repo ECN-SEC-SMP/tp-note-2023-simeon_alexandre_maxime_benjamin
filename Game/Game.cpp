@@ -2,7 +2,16 @@
 #include <algorithm>
 
 
-Game::Game(void) {}
+Game::Game(void) {
+    //instanciation des 16 cases du plateau   
+    for(int y=0;y<16;y++)
+    {
+        for(int x=0; x<16;x++)
+        {            
+            plateau[y][x] = Case();
+        }
+    }
+}
 
 Robot* Game::createRobot(Color color){
     bool posok = false;
@@ -51,6 +60,7 @@ Direction Game::findPosition (string direction){
 }
 
 void Game::iniGame(){
+    plateauInit();
     bool nbok = false;
     string signednbjoueurs;
     string nom;
@@ -101,7 +111,7 @@ void Game::iniGame(){
     // cout << "couleur du robot 0 : " << robots[2]->getColor() <<", position en x : " <<  robots[2]->getPosition().getX() << " et position en y : " << robots[2]->getPosition().getY() << endl; 
     robots.push_back(createRobot(GREEN));
     // cout << "couleur du robot 0 : " << robots[3]->getColor() <<", position en x : " <<  robots[3]->getPosition().getX() << " et position en y : " << robots[3]->getPosition().getY() << endl; 
-    cout << "fin initialisation, la partie peut commencer"<< endl; 
+    cout << "fin initialisation, la partie peut commencer"<< endl;
 }
 
 bool Game::playTurn(const Target* target) {
@@ -116,6 +126,7 @@ bool Game::playTurn(const Target* target) {
     string color;  
     string mvt; 
     Direction direction; 
+    afficher_plateau();
     while (nbval != joueurs.size()){
         cout << "entree while"<<endl; 
         cout << "nom joueur :" ;
@@ -340,22 +351,8 @@ Position Game::mur_exterieur_vertical(int quart_plateau)//genere aleatoirement u
   return mur; 
 }
 
-Case* Game::creerPlateau(Case* c[16][16])
-{ 
-    //instanciation des 16 cases du plateau   
-    for(int y=0;y<16;y++)
-    {
-        for(int x=0; x<16;x++)
-        {            
-            c[y][x] = new Case();                 
-          
-        }
-    }
 
-    return c[16][16]; //retourne le plateau
-}
-
-void Game::afficher_plateau(Case* c[16][16])//affiche les 16 cases du plateau
+void Game::afficher_plateau()//affiche les 16 cases du plateau
 {
     //genere la ligne du bord haut
     for(int i=0;i<16;i++)
@@ -369,15 +366,14 @@ void Game::afficher_plateau(Case* c[16][16])//affiche les 16 cases du plateau
     {
         for(int x=0; x<16;x++)
         {  
-            c[y][x]->affichage_case(c,x,y);
-            
+            affichage_case(x,y);
         }
         cout << "|" << endl;//affiche le bord droit
         
     }
 }
 
-void Game::plateauInit(Case* plateau[16][16])
+void Game::plateauInit()
 {  
 
     //generer mur exterieur pour les 4 quart du plateau
@@ -387,8 +383,8 @@ void Game::plateauInit(Case* plateau[16][16])
         for(int i = 0;i < 1000000000;i++){}
         Position premier_quart_vert = mur_exterieur_vertical(quart_plateau);//genere coordonnees mur ext vertical
 
-        plateau[premier_quart_horiz.getX()][premier_quart_horiz.getY()]->setMurG(1);//cree mur ext
-        plateau[premier_quart_vert.getX()][premier_quart_vert.getY()]->setMurB(1);//cree mur int
+        plateau[premier_quart_horiz.getX()][premier_quart_horiz.getY()].setMurG(1);//cree mur ext
+        plateau[premier_quart_vert.getX()][premier_quart_vert.getY()].setMurB(1);//cree mur int
    }  
 
    //generer mur interieur et leur cible pour chaque quart
@@ -397,17 +393,17 @@ void Game::plateauInit(Case* plateau[16][16])
         for(int i = 0;i<4;i++)//gener quatre mur interieur
         {
             for(int i = 0;i < 100000000;i++){}
-            murInterieur(plateau,quart_plateau);//cree le mur interieur                               
+            murInterieur(quart_plateau);//cree le mur interieur                               
          }        
          cout << endl;
 //             
     } 
 
-    generer17emeTarget(plateau);
+    generer17emeTarget();
 
 }
 
-void Game::murInterieur(Case* plateau[16][16], int quart_plateau)//genere mur interieur avec ca cible
+void Game::murInterieur(int quart_plateau)//genere mur interieur avec ca cible
 {
 
     //genere position aleatoire mur interieur    
@@ -447,16 +443,16 @@ void Game::murInterieur(Case* plateau[16][16], int quart_plateau)//genere mur in
     }     
 
     //verifie qu'il ny ai pas 2 angle cote a cote
-    if(plateau[p.getY()][p.getX()]->getAngle() == NONE
+    if(plateau[p.getY()][p.getX()].getAngle() == NONE
     
-        && plateau[p.getY()-1][p.getX()-1]->getAngle() == NONE && plateau[p.getY()-1][p.getX()+1]->getAngle() == NONE //pas d'angle diagonal bas gauche et bas droit
-        && plateau[p.getY()+1][p.getX()+1]->getAngle() == NONE && plateau[p.getY()+1][p.getX()-1]->getAngle() == NONE //pas d'angle diagonal haut gauche et bas droit
-        && plateau[p.getY()][p.getX()+1]->getAngle() == NONE && plateau[p.getY()][p.getX()-1]->getAngle() == NONE//pas d'angle a droite ni a gauche
-        && plateau[p.getY()-1][p.getX()]->getAngle() == NONE && plateau[p.getY()+1][p.getX()]->getAngle() == NONE// pas d'angle ni en haut ni en bas     
+        && plateau[p.getY()-1][p.getX()-1].getAngle() == NONE && plateau[p.getY()-1][p.getX()+1].getAngle() == NONE //pas d'angle diagonal bas gauche et bas droit
+        && plateau[p.getY()+1][p.getX()+1].getAngle() == NONE && plateau[p.getY()+1][p.getX()-1].getAngle() == NONE //pas d'angle diagonal haut gauche et bas droit
+        && plateau[p.getY()][p.getX()+1].getAngle() == NONE && plateau[p.getY()][p.getX()-1].getAngle() == NONE//pas d'angle a droite ni a gauche
+        && plateau[p.getY()-1][p.getX()].getAngle() == NONE && plateau[p.getY()+1][p.getX()].getAngle() == NONE// pas d'angle ni en haut ni en bas     
 
-        && plateau[p.getY()][p.getX()]->getAngle() == NONE)//verifie que la case n'a pas deja un angle
+        && plateau[p.getY()][p.getX()].getAngle() == NONE)//verifie que la case n'a pas deja un angle
     {
-        plateau[p.getY()][p.getX()]->setAngle();// cree un angle dan la case 
+        plateau[p.getY()][p.getX()].setAngle();// cree un angle dan la case 
         //Target* newTarget = new Target(couleur,symbolTarget,p); 
         //plateau[p.getY()][p.getX()]->setTarget(newTarget);//cree une cible dans la case    
         //targets.push_back(newTarget); 
@@ -465,26 +461,26 @@ void Game::murInterieur(Case* plateau[16][16], int quart_plateau)//genere mur in
     }
     else
     {
-        murInterieur(plateau,quart_plateau);//si il y a un angle trop proche, rappel de la fonction
+        murInterieur(quart_plateau);//si il y a un angle trop proche, rappel de la fonction
 
     }  
 
 }
 
 
-void Game::generer17emeTarget(Case* plateau[16][16])
+void Game::generer17emeTarget()
 {
     Position p(0,0);
     p.setX(1 + rand() % 14);
     p.setY(1 + rand() % 14);
 
-    if((p.getX() == 7 && p.getY() == 7) || (p.getX() == 8 && p.getY() == 7) ||(p.getX() == 8 && p.getY() == 8) ||(p.getX() == 7 && p.getY() == 8) || plateau[p.getY()][p.getX()]->getAngle() != NONE)
+    if((p.getX() == 7 && p.getY() == 7) || (p.getX() == 8 && p.getY() == 7) ||(p.getX() == 8 && p.getY() == 8) ||(p.getX() == 7 && p.getY() == 8) || plateau[p.getY()][p.getX()].getAngle() != NONE)
     {
-        generer17emeTarget(plateau);
+        generer17emeTarget();
     }
     else
     {
-        plateau[p.getY()][p.getX()]->setAngle();
+        plateau[p.getY()][p.getX()].setAngle();
     }
 
 
@@ -528,5 +524,109 @@ void Game::genererTargets(){
                 cptTargets++;
             }
         }
+    }
+}
+
+vector<Target*> Game::getTargetVector(void){
+    return targets;
+}
+
+vector<Player*> Game::getPlayerVector(void){
+    return joueurs;
+}
+
+void Game::affichage_case(int x, int y)//gere l'affichage d'une seul case : murG et murB
+{
+    
+    //carre centrale du plateau
+    plateau[7][7].setMurG(true);
+    plateau[7][7].setMurH(true);
+
+    plateau[8][7].setMurG(true);
+    plateau[8][7].setMurB(true);
+
+    plateau[7][8].setMurH(true);
+    plateau[7][8].setMurD(true);
+
+    plateau[8][8].setMurD(true);
+    plateau[8][8].setMurB(true);
+ 
+
+    //bord du plateaau 
+    for(int i=0;i<16;i++)
+    {
+        plateau[i][0].setMurG(true);
+        plateau[15][i].setMurB(true);
+        plateau[i][15].setMurD(true); 
+        plateau[0][i].setMurH(true);        
+    }
+
+    //Si il y a un angle bas droit OU il y a un mur haut sur la case dessous   
+    if((plateau[y][x].getMurG() == false && plateau[y][x].getMurB() == true) || (y<14 && plateau[y][x].getMurG() == false &&  plateau[y+1][x].getMurH()== true))
+    {
+        if(plateau[y][x].getTarget() == nullptr && plateau[y][x].getRobot() != nullptr)
+        {
+            cout << ":" << plateau[y][x].getRobot()->getCaractereColorRobot() << "";//affiche dans la case initiales robot si il y en a un
+        }
+        else if(plateau[y][x].getTarget() != nullptr)
+        {
+            cout << ":_" << plateau[y][x].getTarget()->getCaracteresTarget() << "_";//affiche dans la case initiales Target si il y en a une
+            
+        }
+        else
+        {
+            cout << ":____";//sinon affiche trait plein
+        }
+        
+    }
+    //angle haut gauche OU case precedente gauche a un mur droit
+    else if((plateau[y][x].getMurG() == true && plateau[y][x].getMurB() == false) || (x>0 && plateau[y][x-1].getMurD() == true && plateau[y][x].getMurB() == false))
+    {
+        if(plateau[y][x].getTarget() == nullptr && plateau[y][x].getRobot() != nullptr)
+        {
+            cout << "|" << plateau[y][x].getRobot()->getCaractereColorRobot() << "";
+        }
+       else if(plateau[y][x].getTarget() != nullptr)
+        {
+            cout << "|." << plateau[y][x].getTarget()->getCaracteresTarget() << ".";
+            
+        }        
+        else
+        {        
+            cout << "|....";
+        }
+    }
+    //angle bas droit
+    else if((plateau[y][x].getMurG() == true && plateau[y][x].getMurB() == true))
+    {
+        if(plateau[y][x].getTarget() == nullptr && plateau[y][x].getRobot() != nullptr) 
+        {
+            cout << "|" << plateau[y][x].getRobot()->getCaractereColorRobot() << "";
+        }
+       else if(plateau[y][x].getTarget() != nullptr)
+        {
+            cout << "|_" << plateau[y][x].getTarget()->getCaracteresTarget() << "_";
+            
+        }        
+        else
+        {        
+            cout << "|____";
+        }    
+    }
+    //angle haut droit OU pas d'angle
+    else
+    {
+        if(plateau[y][x].getRobot() != nullptr)
+        {
+            cout << ":" << plateau[y][x].getRobot()->getCaractereColorRobot() << "";
+        }
+       else if(plateau[y][x].getTarget() != nullptr)
+        {
+            cout << ":." << plateau[y][x].getTarget()->getCaracteresTarget() << ".";
+        }
+        else if(plateau[y][x].getRobot() == nullptr || plateau[y][x].getRobot()->getPosition().getX() != y || plateau[y][x].getRobot()->getPosition().getY() != x)
+        {        
+            cout << ":....";
+        }    
     }
 }

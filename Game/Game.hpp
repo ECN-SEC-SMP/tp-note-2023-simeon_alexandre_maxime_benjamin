@@ -30,6 +30,16 @@ private:
     array<array<Case,16>,16> plateau;
     Robot* findRobot(string color);  
     void genererTargets(void);
+    /**
+    *@brief affiche une case, côté gauche et bas
+    *@details Cette fonction crée le carré centrale et les bord du plateau.
+    * Elle affiche le côté gauche et bas de la case en fonction des mur intérieur.
+    * Elle affiche les initales du robot si il ya un robot sur la case
+    * Elle affiche les initiales e la cible si l y en une sur la case
+    *@param[in] int x valeur dans la boucle qui va parcourir les x dans l'affchage du plateau
+    *@param[in] int x valeur dans la boucle qui va parcourir les y dans l'affchage du plateau
+    */
+    void affichage_case(int x, int y);
 
 public:
     Game(void);
@@ -46,17 +56,19 @@ public:
 
     Position mur_exterieur_vertical(int quart_plateau);
 
-    void afficher_plateau(Case* c[16][16]);
+    void afficher_plateau(void);
 
-    Case *creerPlateau(Case* c[16][16]);
-
-    void plateauInit(Case* plateau[16][16]);
+    void plateauInit(void);
     
-   void murInterieur(Case* plateau[16][16], int quart_plateau);
+    void murInterieur(int quart_plateau);
 
-    void genererRobot(Case* plateau[16][16],Color _color);
+    void genererRobot(Color _color);
 
-    void generer17emeTarget(Case* plateau[16][16]);
+    void generer17emeTarget(void);
+    
+    vector<Target*> getTargetVector(void);
+
+    vector<Player*> getPlayerVector(void);
     
 };
 

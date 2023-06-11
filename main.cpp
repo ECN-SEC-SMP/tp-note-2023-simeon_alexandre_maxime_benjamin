@@ -21,16 +21,12 @@ int main() {
 
 
     srand( time( NULL ) );  
-     Case* plateau[16][16] = {nullptr}; 
     Game g;
-   // g.iniGame(); // Instantiate the Game object with the vectors of robots and targets
-    //g.playTurn();
-    //g.iniGame();
-    //for (int i =  0, i = Color.getvalue());
-
-    g.creerPlateau(plateau);
-    g.plateauInit(plateau);
-    g.afficher_plateau(plateau);
-
-     
+    g.iniGame(); // Instantiate the Game object with the vectors of robots and targets
+    for(int turn=0;turn<=17;turn++){
+        g.playTurn(g.getTargetVector()[turn]);
+    }
+    for(int i; i<g.getPlayerVector().size(); i++){
+        cout << "Score de " << g.getPlayerVector()[i]->getName() << " : " << g.getPlayerVector()[i]->getScore() << endl;
+    }
 }

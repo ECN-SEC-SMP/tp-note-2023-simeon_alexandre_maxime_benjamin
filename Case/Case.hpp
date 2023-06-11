@@ -116,18 +116,6 @@ public:
     */    
     Target* getTarget(void) const;
 
-    /**
-    *@brief affiche une case, côté gauche et bas
-    *@details Cette fonction crée le carré centrale et les bord du plateau.
-    * Elle affiche le côté gauche et bas de la case en fonction des mur intérieur.
-    * Elle affiche les initales du robot si il ya un robot sur la case
-    * Elle affiche les initiales e la cible si l y en une sur la case
-    *@param[in,out] Case* c[16][16]  fonction prend en paramètres le plateau de jeu qui est un tableau de case
-    *@param[in] int x valeur dans la boucle qui va parcourir les x dans l'affchage du plateau
-    *@param[in] int x valeur dans la boucle qui va parcourir les y dans l'affchage du plateau
-    */
-    void affichage_case(Case* c[16][16],int x, int y);
-
     //constructeur
     //constructeur de case 
     /*!
