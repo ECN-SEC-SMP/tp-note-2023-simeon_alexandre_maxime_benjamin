@@ -1,10 +1,6 @@
 #include "Game.hpp"
 #include <algorithm>
 
-    vector<Color> colorPremierQuart;
-    vector<Color> colorTroisiemeQuart;
-    vector<Color> colorDeuxiemeQuart;
-    vector<Color> colorQuatriemeQuart;
 
 Game::Game(void) {}
 
