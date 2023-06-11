@@ -521,11 +521,11 @@ Target* Game::murInterieur(Case* plateau[16][16], int quart_plateau,Symbol symbo
         && plateau[p.getY()][p.getX()]->getAngle() == NONE)//verifie que la case n'a pas deja un angle
     {
         plateau[p.getY()][p.getX()]->setAngle();// cree un angle dan la case 
-        Target* newTarget = new Target(couleur,symbolTarget,p); 
-        plateau[p.getY()][p.getX()]->setTarget(newTarget);//cree une cible dans la case    
-        targets.push_back(newTarget); 
+        //Target* newTarget = new Target(couleur,symbolTarget,p); 
+        //plateau[p.getY()][p.getX()]->setTarget(newTarget);//cree une cible dans la case    
+        //targets.push_back(newTarget); 
 
-        return newTarget;       
+        //return newTarget;       
     }
     else
     {
@@ -564,8 +564,6 @@ Color Game::genererCouleurAleatoire(int quart, Case* plateau[16][16], vector <Co
             }
         }
     }
-
-
 
     return couleur;
 }
