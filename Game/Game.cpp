@@ -146,35 +146,40 @@ void Game::playTurn() {
             else nbok = true; 
         }
         int nb = atoi(nbc.c_str()); // conversion en entier
-        for (unsigned i =0;i<nbmvt.size(); i++){
-            if (nb >=nbmvt[i]){
-               nbmvt.insert(nbmvt.begin()+i, nb);
-               ordrePlayer.insert(ordrePlayer.begin()+i, temp);
-            }
-        } 
+        if (nbmvt.size() == 0) nbmvt.push_back(nb);
+        else{
+            for (unsigned i =0;i<nbmvt.size(); i++){
+                cout << "entree for nbmvt"<< endl; 
+                if (nb >=nbmvt[i]){
+                nbmvt.insert(nbmvt.begin()+i, nb);
+                ordrePlayer.insert(ordrePlayer.begin()+i, temp);
+                }
+                cout << "fin test" << endl;
+            } 
+        }
         nbval++; 
     }
     // while (! target reached)
-    cout << "realisation des tours"<< joueurs.size()<< endl; 
+    cout << "realisation des tours, nbmvt = "<<  endl; 
     for (unsigned i=0; i<joueurs.size();i++){ // laisser les joueurs réaliser leurs essais 
         cout<< "entree for : " << joueurs[i]<< "nbmvt : " << nbmvt[i] <<  endl;
         for (unsigned u =0; u<nbmvt[i]; u++){ //le joueur va réaliser les n mvt qu'il a indiqué 
             cout << "couleur robot : "; 
             cin >> color; 
-            while (color != "RED" || "red" || "ROUGE"|| "rouge" ||"BLUE" || "blue" || "BLEU" || "bleu" || "YELLOW" || "yellow" || "JAUNE" || "jaune" || "GREEN" || "green" || "VERT" || "vert"){
+            while (color != "RED" &&color != "red" &&color != "ROUGE" && color != "rouge" && color !="BLUE" &&color != "blue" &&color != "BLEU" &&color != "bleu" &&color != "YELLOW" &&color != "yellow" &&color != "JAUNE" &&color != "jaune" &&color != "GREEN" &&color != "green" &&color != "VERT" &&color != "vert"){
                 cout << "mauvaise couleur, recommencez : "; 
                 cin >> color; 
             }
             Robot* robotTours = findRobot(color); 
             cout << "mouvent (haut, bas, droite, gauche) : "; 
             cin >> mvt; 
-            while (mvt != "UP" || "up"  || "HAUT" || "haut" || "DOWN" || "down" || "BAS" || "bas" || "LEFT" || "left" || "GAUCHE" || "gauche" || "RIGHT" || "right" || "DROITE" || "droite"){
+            while (mvt != "UP" &&mvt != "up"  &&mvt != "HAUT" &&mvt != "haut" &&mvt != "DOWN" &&mvt != "down" &&mvt != "BAS" &&mvt != "bas" &&mvt != "LEFT" &&mvt != "left" &&mvt != "GAUCHE" &&mvt != "gauche" &&mvt != "RIGHT" &&mvt != "right" &&mvt != "DROITE" &&mvt != "droite"){
                 cout << "pas un mouvement, recommencez : "; 
                 cin >> mvt; 
             }
             direction = findPosition(mvt);
             // Robot& test = findRobot(color); 
-            // moveRobot(findRobot(color) , direction);
+            moveRobot(findRobot(color) , direction);
 
         }
         // isTargetReached test target 
@@ -183,56 +188,56 @@ void Game::playTurn() {
 
 }
 
-void Game::moveRobot(Robot& robot, Direction direction){
+void Game::moveRobot(Robot* robot, Direction direction){
     bool blocked=false;
     while(!blocked){
         switch (direction)
         {
         case UP:
-            if(plateau[robot.getPosition().getX()][robot.getPosition().getY()].getMurH()){ // teste le mur
+            if(plateau[robot->getPosition().getX()][robot->getPosition().getY()].getMurH()){ // teste le mur
                 blocked=true;
             }
-            else if(plateau[robot.getPosition().getX()][robot.getPosition().getY()-1].getRobot()!=nullptr){ // teste s'il y a un robot
+            else if(plateau[robot->getPosition().getX()][robot->getPosition().getY()-1].getRobot()!=nullptr){ // teste s'il y a un robot
                 blocked=true;
             }
             else{
-                robot.setPosition(Position(robot.getPosition().getX(), robot.getPosition().getY()-1)); // déplace le robot en haut
+                robot->setPosition(Position(robot->getPosition().getX(), robot->getPosition().getY()-1)); // déplace le robot en haut
             }
             break;
 
         case DOWN:
-            if(plateau[robot.getPosition().getX()][robot.getPosition().getY()].getMurB()){ // teste le mur
+            if(plateau[robot->getPosition().getX()][robot->getPosition().getY()].getMurB()){ // teste le mur
                 blocked=true;
             }
-            else if(plateau[robot.getPosition().getX()][robot.getPosition().getY()+1].getRobot()!=nullptr){ // teste s'il y a un robot
+            else if(plateau[robot->getPosition().getX()][robot->getPosition().getY()+1].getRobot()!=nullptr){ // teste s'il y a un robot
                 blocked=true;
             }
             else{
-                robot.setPosition(Position(robot.getPosition().getX(), robot.getPosition().getY()+1)); // déplace le robot en bas
+                robot->setPosition(Position(robot->getPosition().getX(), robot->getPosition().getY()+1)); // déplace le robot en bas
             }
             break;
 
         case LEFT:
-            if(plateau[robot.getPosition().getX()][robot.getPosition().getY()].getMurG()){ // teste le mur
+            if(plateau[robot->getPosition().getX()][robot->getPosition().getY()].getMurG()){ // teste le mur
                 blocked=true;
             }
-            else if(plateau[robot.getPosition().getX()-1][robot.getPosition().getY()].getRobot()!=nullptr){ // teste s'il y a un robot
+            else if(plateau[robot->getPosition().getX()-1][robot->getPosition().getY()].getRobot()!=nullptr){ // teste s'il y a un robot
                 blocked=true;
             }
             else{
-                robot.setPosition(Position(robot.getPosition().getX()-1, robot.getPosition().getY())); // déplace le robot à gauche
+                robot->setPosition(Position(robot->getPosition().getX()-1, robot->getPosition().getY())); // déplace le robot à gauche
             }
             break;
 
         default:
-            if(plateau[robot.getPosition().getX()][robot.getPosition().getY()].getMurD()){ // teste le mur
+            if(plateau[robot->getPosition().getX()][robot->getPosition().getY()].getMurD()){ // teste le mur
                 blocked=true;
             }
-            else if(plateau[robot.getPosition().getX()+1][robot.getPosition().getY()].getRobot()!=nullptr){ // teste s'il y a un robot
+            else if(plateau[robot->getPosition().getX()+1][robot->getPosition().getY()].getRobot()!=nullptr){ // teste s'il y a un robot
                 blocked=true;
             }
             else{
-                robot.setPosition(Position(robot.getPosition().getX()+1, robot.getPosition().getY())); // déplace le robot à droite
+                robot->setPosition(Position(robot->getPosition().getX()+1, robot->getPosition().getY())); // déplace le robot à droite
             }
             break;
         }
