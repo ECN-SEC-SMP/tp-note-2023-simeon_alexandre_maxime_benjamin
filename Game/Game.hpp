@@ -26,7 +26,7 @@ private:
     vector<Target*> targets;
     vector<Player*> joueurs;
     Robot* createRobot(Color color);
-
+    Direction findPosition (string direction); 
     array<array<Case,16>,16> plateau;
     Robot* findRobot(string color);  
 
@@ -36,11 +36,11 @@ public:
 
     void iniGame();
 
-    void playTurn();
+    bool playTurn(const Target* target);
 
-    void moveRobot(Robot& robot, Direction direction);
+    void moveRobot(Robot* robot, Direction direction);
 
-    bool isTargetReached(const Target& target) const;
+    bool isTargetReached(const Target* target) const;
 
     Position mur_exterieur_horizontale(int quart_plateau);
 

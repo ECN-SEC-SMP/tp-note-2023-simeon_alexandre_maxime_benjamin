@@ -40,13 +40,19 @@ Robot* Game::createRobot(Color color){
     return z; 
 }
 
-/*Robot* Game::findRobot(string color){
-    color= capitalizeString(color);
-    if (color == "RED" || "ROUGE") return robots[0];
-    else if (color == "BLUE" || "BLEU") return robots[1];
-    else if (color == "YELLOW" || "JAUNE") return robots[2];
-    else (color == "GREEN" || "VERT") return robots[3];
-}*/
+Robot* Game::findRobot(string color){
+    if (color == "RED" ||color =="red" ||color == "ROUGE"||color == "rouge") return robots[0];
+    else if (color == "BLUE" ||color == "blue" ||color == "BLEU" ||color == "bleu") return robots[1];
+    else if (color == "YELLOW" ||color == "yellow" ||color == "JAUNE" ||color == "jaune") return robots[2];
+    else if (color == "GREEN" ||color == "green" ||color == "VERT" ||color == "vert") return robots[3];
+}
+
+Direction Game::findPosition (string direction){
+    if (direction == "UP" ||direction == "up"  ||direction == "HAUT" ||direction == "haut") return UP; 
+    else if (direction == "DOWN" ||direction == "down" ||direction == "BAS" ||direction == "bas") return DOWN;
+    else if (direction == "LEFT" ||direction == "left" ||direction == "GAUCHE" ||direction == "gauche") return LEFT;
+    else if (direction == "RIGHT" ||direction == "right" ||direction == "DROITE" ||direction == "droite") return RIGHT;
+}
 
 void Game::iniGame(){
     bool nbok = false;
@@ -102,28 +108,35 @@ void Game::iniGame(){
     cout << "fin initialisation, la partie peut commencer"<< endl; 
 }
 
-void Game::playTurn() {
+bool Game::playTurn(const Target* target) {
     unsigned nbval = 0; 
     string nom; 
-    string nbc =0; 
+    string nbc; 
     bool J =false; 
     bool nbok = false;
     vector<Player*> ordrePlayer;
     vector<int> nbmvt;
     Player* temp; 
-    string color; 
+    string color;  
+    string mvt; 
+    Direction direction; 
     while (nbval != joueurs.size()){
+        cout << "entree while"<<endl; 
         cout << "nom joueur :" ;
         cin >> nom;
         while (J == false){
-        for (unsigned i = 0; i==joueurs.size(); i++){ //on test que le joueur existe et récupère son numéro 
-            if (nom==joueurs[i]->getName()) { 
-                J = true; // on trouve le joueur
-                temp= joueurs[i];
+            for (unsigned i = 0; i <joueurs.size(); i++){ //on test que le joueur existe et récupère son numéro 
+                cout << "entree for"<< joueurs[i] << endl; 
+                if (nom ==  joueurs[i]->getName()) {                     
+                    temp= joueurs[i];
+                    J = true; // on trouve le joueur
+                }
             }
-        }
-        cout << "joueur inexistant, recommencez : ";
-        cin >> nom;             //On demande un nouveau nombre
+            if (J== false){
+                cout << "fin test joueur"<< endl; 
+                cout << "joueur inexistant, recommencez : ";
+                cin >> nom; //On demande un nouveau nombre
+            }                       
         }
         
         cout << "nombre d'actions :" ;
@@ -139,72 +152,98 @@ void Game::playTurn() {
             else nbok = true; 
         }
         int nb = atoi(nbc.c_str()); // conversion en entier
-        // nbmvt.push_back(nb);
-        for (unsigned i =0;i==nbmvt.size(); i++){
-            if (nb >=nbmvt[i]){
-               nbmvt.insert(nbmvt.begin()+i, nb);
-               ordrePlayer.insert(ordrePlayer.begin()+i, temp);
-            }
-        } 
+        if (nbmvt.size() == 0) nbmvt.push_back(nb);
+        else{
+            for (unsigned i =0;i<nbmvt.size(); i++){
+                cout << "entree for nbmvt"<< endl; 
+                if (nb >=nbmvt[i]){
+                nbmvt.insert(nbmvt.begin()+i, nb);
+                ordrePlayer.insert(ordrePlayer.begin()+i, temp);
+                }
+                cout << "fin test" << endl;
+            } 
+        }
+        nbval++; 
     }
-    /*for (unsigned i=0; i==joueurs.size();i++){ // laisser les joueurs réaliser leurs essais 
-        for (unsigned u; u==nbmvt[i]; u++){ //le joueur va réaliser les n mvt qu'il a indiqué 
+    // while (! target reached)
+    cout << "realisation des tours, nbmvt = "<<  endl; 
+    for (unsigned i=0; i<joueurs.size() ;i++){ // laisser les joueurs réaliser leurs essais 
+        cout<< "entree for : " << joueurs[i]<< "nbmvt : " << nbmvt[i] <<  endl;
+        for (unsigned u =0; u<nbmvt[i]; u++){ //le joueur va réaliser les n mvt qu'il a indiqué 
             cout << "couleur robot : "; 
             cin >> color; 
+            while (color != "RED" &&color != "red" &&color != "ROUGE" && color != "rouge" && color !="BLUE" &&color != "blue" &&color != "BLEU" &&color != "bleu" &&color != "YELLOW" &&color != "yellow" &&color != "JAUNE" &&color != "jaune" &&color != "GREEN" &&color != "green" &&color != "VERT" &&color != "vert"){
+                cout << "mauvaise couleur, recommencez : "; 
+                cin >> color; 
+            }
+            Robot* robotTours = findRobot(color); 
+            cout << "mouvent (haut, bas, droite, gauche) : "; 
+            cin >> mvt; 
+            while (mvt != "UP" &&mvt != "up"  &&mvt != "HAUT" &&mvt != "haut" &&mvt != "DOWN" &&mvt != "down" &&mvt != "BAS" &&mvt != "bas" &&mvt != "LEFT" &&mvt != "left" &&mvt != "GAUCHE" &&mvt != "gauche" &&mvt != "RIGHT" &&mvt != "right" &&mvt != "DROITE" &&mvt != "droite"){
+                cout << "pas un mouvement, recommencez : "; 
+                cin >> mvt; 
+            }
+            direction = findPosition(mvt);
+            // Robot& test = findRobot(color); 
+            moveRobot(findRobot(color) , direction);
+
         }
-    }*/
+        if (isTargetReached(target)) return true; 
+    }
+    return false; 
+
 }
 
-void Game::moveRobot(Robot& robot, Direction direction){
+void Game::moveRobot(Robot* robot, Direction direction){
     bool blocked=false;
     while(!blocked){
         switch (direction)
         {
         case UP:
-            if(plateau[robot.getPosition().getX()][robot.getPosition().getY()].getMurH()){ // teste le mur
+            if(plateau[robot->getPosition().getX()][robot->getPosition().getY()].getMurH()){ // teste le mur
                 blocked=true;
             }
-            else if(plateau[robot.getPosition().getX()][robot.getPosition().getY()-1].getRobot()!=nullptr){ // teste s'il y a un robot
+            else if(plateau[robot->getPosition().getX()][robot->getPosition().getY()-1].getRobot()!=nullptr){ // teste s'il y a un robot
                 blocked=true;
             }
             else{
-                robot.setPosition(Position(robot.getPosition().getX(), robot.getPosition().getY()-1)); // déplace le robot en haut
+                robot->setPosition(Position(robot->getPosition().getX(), robot->getPosition().getY()-1)); // déplace le robot en haut
             }
             break;
 
         case DOWN:
-            if(plateau[robot.getPosition().getX()][robot.getPosition().getY()].getMurB()){ // teste le mur
+            if(plateau[robot->getPosition().getX()][robot->getPosition().getY()].getMurB()){ // teste le mur
                 blocked=true;
             }
-            else if(plateau[robot.getPosition().getX()][robot.getPosition().getY()+1].getRobot()!=nullptr){ // teste s'il y a un robot
+            else if(plateau[robot->getPosition().getX()][robot->getPosition().getY()+1].getRobot()!=nullptr){ // teste s'il y a un robot
                 blocked=true;
             }
             else{
-                robot.setPosition(Position(robot.getPosition().getX(), robot.getPosition().getY()+1)); // déplace le robot en bas
+                robot->setPosition(Position(robot->getPosition().getX(), robot->getPosition().getY()+1)); // déplace le robot en bas
             }
             break;
 
         case LEFT:
-            if(plateau[robot.getPosition().getX()][robot.getPosition().getY()].getMurG()){ // teste le mur
+            if(plateau[robot->getPosition().getX()][robot->getPosition().getY()].getMurG()){ // teste le mur
                 blocked=true;
             }
-            else if(plateau[robot.getPosition().getX()-1][robot.getPosition().getY()].getRobot()!=nullptr){ // teste s'il y a un robot
+            else if(plateau[robot->getPosition().getX()-1][robot->getPosition().getY()].getRobot()!=nullptr){ // teste s'il y a un robot
                 blocked=true;
             }
             else{
-                robot.setPosition(Position(robot.getPosition().getX()-1, robot.getPosition().getY())); // déplace le robot à gauche
+                robot->setPosition(Position(robot->getPosition().getX()-1, robot->getPosition().getY())); // déplace le robot à gauche
             }
             break;
 
         default:
-            if(plateau[robot.getPosition().getX()][robot.getPosition().getY()].getMurD()){ // teste le mur
+            if(plateau[robot->getPosition().getX()][robot->getPosition().getY()].getMurD()){ // teste le mur
                 blocked=true;
             }
-            else if(plateau[robot.getPosition().getX()+1][robot.getPosition().getY()].getRobot()!=nullptr){ // teste s'il y a un robot
+            else if(plateau[robot->getPosition().getX()+1][robot->getPosition().getY()].getRobot()!=nullptr){ // teste s'il y a un robot
                 blocked=true;
             }
             else{
-                robot.setPosition(Position(robot.getPosition().getX()+1, robot.getPosition().getY())); // déplace le robot à droite
+                robot->setPosition(Position(robot->getPosition().getX()+1, robot->getPosition().getY())); // déplace le robot à droite
             }
             break;
         }
@@ -212,12 +251,12 @@ void Game::moveRobot(Robot& robot, Direction direction){
 }
 
 // Did the robot reach the target?
-bool Game::isTargetReached(const Target& target) const{
+bool Game::isTargetReached(const Target* target) const{
     int8_t x, y;
-    x = target.getPosition().getX();
-    y = target.getPosition().getY();
+    x = target->getPosition().getX();
+    y = target->getPosition().getY();
 
-    if(plateau[x][y].getRobot()->getColor() == target.getColor()){
+    if(plateau[x][y].getRobot()->getColor() == target->getColor()){
         return true;
     }
     return false;
