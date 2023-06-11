@@ -36,7 +36,7 @@ public:
 
     void iniGame();
 
-    void playTurn();
+    bool playTurn(const Target* target);
 
     void moveRobot(Robot* robot, Direction direction);
 

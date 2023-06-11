@@ -102,7 +102,7 @@ void Game::iniGame(){
     cout << "fin initialisation, la partie peut commencer"<< endl; 
 }
 
-void Game::playTurn() {
+bool Game::playTurn(const Target* target) {
     unsigned nbval = 0; 
     string nom; 
     string nbc; 
@@ -161,7 +161,7 @@ void Game::playTurn() {
     }
     // while (! target reached)
     cout << "realisation des tours, nbmvt = "<<  endl; 
-    for (unsigned i=0; i<joueurs.size();i++){ // laisser les joueurs réaliser leurs essais 
+    for (unsigned i=0; i<joueurs.size() ;i++){ // laisser les joueurs réaliser leurs essais 
         cout<< "entree for : " << joueurs[i]<< "nbmvt : " << nbmvt[i] <<  endl;
         for (unsigned u =0; u<nbmvt[i]; u++){ //le joueur va réaliser les n mvt qu'il a indiqué 
             cout << "couleur robot : "; 
@@ -182,9 +182,9 @@ void Game::playTurn() {
             moveRobot(findRobot(color) , direction);
 
         }
-        // isTargetReached test target 
+        if (isTargetReached(target)) return true; 
     }
-    // } fin while
+    return false; 
 
 }
 
