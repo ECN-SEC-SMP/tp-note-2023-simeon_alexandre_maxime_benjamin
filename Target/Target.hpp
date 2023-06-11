@@ -25,6 +25,8 @@ public:
     Symbol getSymbol() const;
     Position getPosition() const;
 
+    void setPosition(Position p);
+
     std::string getCaracteresTarget();
 
 };

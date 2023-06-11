@@ -256,7 +256,7 @@ bool Game::isTargetReached(const Target* target) const{
     x = target->getPosition().getX();
     y = target->getPosition().getY();
 
-    if(plateau[x][y].getRobot()->getColor() == target->getColor()){
+    if((plateau[x][y].getRobot()->getColor() == target->getColor()) || (plateau[x][y].getRobot() && target->getColor() == MULTICOLOR)){
         return true;
     }
     return false;
@@ -589,4 +589,45 @@ void Game::generer17emeTarget(Case* plateau[16][16])
     }
 
 
+}
+
+void Game::genererTargets(){
+    Position p = Position(0,0); // créée une position provisoire pour la génération des cibles
+    // targets rouges
+    targets[0]=new Target(RED,TRIANGLE,p);
+    targets[1]=new Target(RED,CIRCLE,p);
+    targets[2]=new Target(RED,DIAMOND,p);
+    targets[3]=new Target(RED,SQUARE,p);
+    // targets jaunes
+    targets[4]=new Target(YELLOW,TRIANGLE,p);
+    targets[5]=new Target(YELLOW,CIRCLE,p);
+    targets[6]=new Target(YELLOW,DIAMOND,p);
+    targets[7]=new Target(YELLOW,SQUARE,p);    
+    // targets bleues
+    targets[8]=new Target(BLUE,TRIANGLE,p);
+    targets[9]=new Target(BLUE,CIRCLE,p);
+    targets[10]=new Target(BLUE,DIAMOND,p);
+    targets[11]=new Target(BLUE,SQUARE,p);
+    // targets vertes
+    targets[12]=new Target(GREEN,TRIANGLE,p);
+    targets[13]=new Target(GREEN,CIRCLE,p);
+    targets[14]=new Target(GREEN,DIAMOND,p);
+    targets[15]=new Target(GREEN,SQUARE,p);
+    // target multicolore
+    targets[16]=new Target(MULTICOLOR,DIAMOND,p);
+
+    random_shuffle(targets.begin(), targets.end()); // mélange les targets
+
+    int cptTargets=0;
+    for(int x=0;x<16;x++){
+        for(int y=0;y<16;y++){
+            if(plateau[x][y].getAngle()!=NONE){
+                plateau[x][y].setTarget(targets[cptTargets]);
+                p.setX(x);
+                p.setY(y);
+                targets[cptTargets]->setPosition(p);
+                cptTargets++;
+            }
+        }
+    }
 }
