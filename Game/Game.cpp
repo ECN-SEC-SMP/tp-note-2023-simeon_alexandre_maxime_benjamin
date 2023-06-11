@@ -34,6 +34,14 @@ Robot* Game::createRobot(Color color){
     return z; 
 }
 
+Robot* Game::findRobot(string color){
+    color= capitalizeString(color);
+    if (color == "RED" || "ROUGE") return robots[0];
+    else if (color == "BLUE" || "BLEU") return robots[1];
+    else if (color == "YELLOW" || "JAUNE") return robots[2];
+    else (color == "GREEN" || "VERT") return robots[3];
+}
+
 void Game::iniGame(){
     bool nbok = false;
     string signednbjoueurs;
@@ -89,12 +97,56 @@ void Game::iniGame(){
 }
 
 void Game::playTurn() {
-    // int nbjoueurs = 3; // pour test
-    // int nbval = 0; 
-    // while (nbval != nbjoueurs){
-    //     cout << "nom joueur :" ;
-    //     cin << 
-    // }
+    int nbval = 0; 
+    string nom; 
+    string nbc =0; 
+    bool J =false; 
+    bool nbok = false;
+    vector<Player*> ordrePlayer;
+    vector<int> nbmvt;
+    Player* temp; 
+    string color; 
+    while (nbval != joueurs.size()){
+        cout << "nom joueur :" ;
+        cin >> nom;
+        while (J == false){
+        for (int i = 0; i=joueurs.size(); i++){ //on test que le joueur existe et récupère son numéro 
+            if (nom==joueurs[i]->getName()) { 
+                J = true; // on trouve le joueur
+                temp= joueurs[i];
+            }
+        }
+        cout << "joueur inexistant, recommencez : ";
+        cin >> nom;             //On demande un nouveau nombre
+        }
+        
+        cout << "nombre d'actions :" ;
+        cin >> nbc;
+        while (nbok == false){
+            istringstream iss(nbc);
+            double number;
+            if(!(iss >> number) && !(iss.eof()) )  //Si ce n'est pas un chiffre
+            {
+                cout << "pas un nombre, recommencez : ";
+                cin >> nbc;             //On demande un nouveau nombre
+            }
+            else nbok = true; 
+        }
+        int nb = atoi(nbc.c_str()); // conversion en entier
+        // nbmvt.push_back(nb);
+        for (int i =0;i=nbmvt.size(); i++){
+            if (nb >=nbmvt[i]){
+               nbmvt.insert(nbmvt.begin()+i, nb);
+               ordrePlayer.insert(ordrePlayer.begin()+i, temp);
+            }
+        } 
+    }
+    for (int i=0; i=joueurs.size();i++){ // laisser les joueurs réaliser leurs essais 
+        for (int u; u=nbmvt[i]; u++){ //le joueur va réaliser les n mvt qu'il a indiqué 
+            cout << "couleur robot : "; 
+            cin >> color; 
+        }
+    }
 }
 
 void Game::moveRobot(Robot& robot, Direction direction){
