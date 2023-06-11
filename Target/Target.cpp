@@ -17,6 +17,10 @@ Position Target::getPosition() const {
     return position;
 }
 
+void Target::setPosition(Position p){
+    position=p;
+}
+
 std::string Target::getCaracteresTarget()// retourne initial symbol + initlale couleur
 {
     switch(this->symbol){
