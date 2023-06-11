@@ -23,7 +23,7 @@ int main() {
 
 
     srand( time( NULL ) );  
-    Case* plateau[16][16] = {nullptr}; 
+    // Case* plateau[16][16] = {nullptr}; 
     Game g;
     g.iniGame(); // Instantiate the Game object with the vectors of robots and targets
     g.playTurn();
