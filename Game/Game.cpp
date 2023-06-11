@@ -126,9 +126,11 @@ void Game::playTurn() {
                     J = true; // on trouve le joueur
                 }
             }
-            cout << "fin test joueur"<< endl; 
-            cout << "joueur inexistant, recommencez : ";
-            cin >> nom;             //On demande un nouveau nombre
+            if (J== false){
+                cout << "fin test joueur"<< endl; 
+                cout << "joueur inexistant, recommencez : ";
+                cin >> nom; //On demande un nouveau nombre
+            }                       
         }
         
         cout << "nombre d'actions :" ;
