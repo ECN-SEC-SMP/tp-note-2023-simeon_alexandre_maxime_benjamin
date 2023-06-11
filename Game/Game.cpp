@@ -61,6 +61,7 @@ Direction Game::findPosition (string direction){
 
 void Game::iniGame(){
     plateauInit();
+    genererTargets();
     bool nbok = false;
     string signednbjoueurs;
     string nom;
@@ -487,29 +488,29 @@ void Game::generer17emeTarget()
 }
 
 void Game::genererTargets(){
-    Position p = Position(0,0); // créée une position provisoire pour la génération des cibles
+    Position p(0,0); // créée une position provisoire pour la génération des cibles
     // targets rouges
-    targets[0]=new Target(RED,TRIANGLE,p);
-    targets[1]=new Target(RED,CIRCLE,p);
-    targets[2]=new Target(RED,DIAMOND,p);
-    targets[3]=new Target(RED,SQUARE,p);
+    targets.push_back(new Target(RED,TRIANGLE,p));
+    targets.push_back(new Target(RED,CIRCLE,p));
+    targets.push_back(new Target(RED,DIAMOND,p));
+    targets.push_back(new Target(RED,SQUARE,p));
     // targets jaunes
-    targets[4]=new Target(YELLOW,TRIANGLE,p);
-    targets[5]=new Target(YELLOW,CIRCLE,p);
-    targets[6]=new Target(YELLOW,DIAMOND,p);
-    targets[7]=new Target(YELLOW,SQUARE,p);    
+    targets.push_back(new Target(YELLOW,TRIANGLE,p));
+    targets.push_back(new Target(YELLOW,CIRCLE,p));
+    targets.push_back(new Target(YELLOW,DIAMOND,p));
+    targets.push_back(new Target(YELLOW,SQUARE,p));    
     // targets bleues
-    targets[8]=new Target(BLUE,TRIANGLE,p);
-    targets[9]=new Target(BLUE,CIRCLE,p);
-    targets[10]=new Target(BLUE,DIAMOND,p);
-    targets[11]=new Target(BLUE,SQUARE,p);
+    targets.push_back(new Target(BLUE,TRIANGLE,p));
+    targets.push_back(new Target(BLUE,CIRCLE,p));
+    targets.push_back(new Target(BLUE,DIAMOND,p));
+    targets.push_back(new Target(BLUE,SQUARE,p));
     // targets vertes
-    targets[12]=new Target(GREEN,TRIANGLE,p);
-    targets[13]=new Target(GREEN,CIRCLE,p);
-    targets[14]=new Target(GREEN,DIAMOND,p);
-    targets[15]=new Target(GREEN,SQUARE,p);
+    targets.push_back(new Target(GREEN,TRIANGLE,p));
+    targets.push_back(new Target(GREEN,CIRCLE,p));
+    targets.push_back(new Target(GREEN,DIAMOND,p));
+    targets.push_back(new Target(GREEN,SQUARE,p));
     // target multicolore
-    targets[16]=new Target(MULTICOLOR,DIAMOND,p);
+    targets.push_back(new Target(MULTICOLOR,DIAMOND,p));
 
     random_shuffle(targets.begin(), targets.end()); // mélange les targets
 
