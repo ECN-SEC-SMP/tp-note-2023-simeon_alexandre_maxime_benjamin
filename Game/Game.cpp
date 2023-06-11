@@ -35,17 +35,17 @@ Robot* Game::createRobot(Color color){
 }
 
 Robot* Game::findRobot(string color){
-    if (color == "RED" ||"red" || "ROUGE"|| "rouge") return robots[0];
-    else if (color == "BLUE" || "blue" || "BLEU" || "bleu") return robots[1];
-    else if (color == "YELLOW" || "yellow" || "JAUNE" || "jaune") return robots[2];
-    else if (color == "GREEN" || "green" || "VERT" || "vert") return robots[3];
+    if (color == "RED" ||color =="red" ||color == "ROUGE"||color == "rouge") return robots[0];
+    else if (color == "BLUE" ||color == "blue" ||color == "BLEU" ||color == "bleu") return robots[1];
+    else if (color == "YELLOW" ||color == "yellow" ||color == "JAUNE" ||color == "jaune") return robots[2];
+    else if (color == "GREEN" ||color == "green" ||color == "VERT" ||color == "vert") return robots[3];
 }
 
 Direction Game::findPosition (string direction){
-    if (direction == "UP" || "up"  || "HAUT" || "haut") return UP; 
-    else if (direction == "DOWN" || "down" || "BAS" || "bas") return DOWN;
-    else if (direction == "LEFT" || "left" || "GAUCHE" || "gauche") LEFT;
-    else if (direction == "RIGHT" || "right" || "DROITE" || "droite") return RIGHT;
+    if (direction == "UP" ||direction == "up"  ||direction == "HAUT" ||direction == "haut") return UP; 
+    else if (direction == "DOWN" ||direction == "down" ||direction == "BAS" ||direction == "bas") return DOWN;
+    else if (direction == "LEFT" ||direction == "left" ||direction == "GAUCHE" ||direction == "gauche") return LEFT;
+    else if (direction == "RIGHT" ||direction == "right" ||direction == "DROITE" ||direction == "droite") return RIGHT;
 }
 
 void Game::iniGame(){
@@ -121,7 +121,7 @@ void Game::playTurn() {
         while (J == false){
             for (unsigned i = 0; i <joueurs.size(); i++){ //on test que le joueur existe et récupère son numéro 
                 cout << "entree for"<< joueurs[i] << endl; 
-                if (nom==joueurs[i]->getName()) {                     
+                if (nom ==  joueurs[i]->getName()) {                     
                     temp= joueurs[i];
                     J = true; // on trouve le joueur
                 }
@@ -153,9 +153,10 @@ void Game::playTurn() {
         nbval++; 
     }
     // while (! target reached)
-    cout << "réalisation des tours"<< endl; 
+    cout << "realisation des tours"<< joueurs.size()<< endl; 
     for (unsigned i=0; i<joueurs.size();i++){ // laisser les joueurs réaliser leurs essais 
-        for (unsigned u; u<nbmvt[i]; u++){ //le joueur va réaliser les n mvt qu'il a indiqué 
+        cout<< "entree for : " << joueurs[i]<< "nbmvt : " << nbmvt[i] <<  endl;
+        for (unsigned u =0; u<nbmvt[i]; u++){ //le joueur va réaliser les n mvt qu'il a indiqué 
             cout << "couleur robot : "; 
             cin >> color; 
             while (color != "RED" || "red" || "ROUGE"|| "rouge" ||"BLUE" || "blue" || "BLEU" || "bleu" || "YELLOW" || "yellow" || "JAUNE" || "jaune" || "GREEN" || "green" || "VERT" || "vert"){
@@ -170,6 +171,7 @@ void Game::playTurn() {
                 cin >> mvt; 
             }
             direction = findPosition(mvt);
+            // Robot& test = findRobot(color); 
             // moveRobot(findRobot(color) , direction);
 
         }

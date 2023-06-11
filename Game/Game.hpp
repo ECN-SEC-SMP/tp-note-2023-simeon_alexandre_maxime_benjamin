@@ -26,7 +26,7 @@ private:
     vector<Target*> targets;
     vector<Player*> joueurs;
     Robot* createRobot(Color color);
-
+    Direction findPosition (string direction); 
     array<array<Case,16>,16> plateau;
     Robot* findRobot(string color);  
 
