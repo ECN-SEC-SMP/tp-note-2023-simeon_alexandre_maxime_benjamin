@@ -29,3 +29,10 @@ enum Angle {
     HG,
     NONE
 };
+
+enum quartPlateau{
+    premier_quart, //haut gauche
+    deuxieme_quart, //haut droit
+    troisieme_quart, //bas droit
+    quatrieme_quart  //bas gauche  
+};

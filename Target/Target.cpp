@@ -17,7 +17,7 @@ Position Target::getPosition() const {
     return position;
 }
 
-std::string Target::getCaracteresTarget()
+std::string Target::getCaracteresTarget()// retourne initial symbol + initlale couleur
 {
     switch(this->symbol){
 
@@ -37,7 +37,11 @@ std::string Target::getCaracteresTarget()
             else if(this->color == GREEN)
             {
                 return "TG";
-            }                        
+            }
+            else if(this->color == MULTICOLOR)
+            {
+                return "TM";  
+            }                                 
         break;
         case SQUARE:
             if(this->color == RED)
@@ -55,7 +59,11 @@ std::string Target::getCaracteresTarget()
             else if(this->color == GREEN)
             {
                 return "SG";
-            }          
+            } 
+            else if(this->color == MULTICOLOR)
+            {
+                return "SM";  
+            }                  
         break;
         case CIRCLE:
             if(this->color == RED)
@@ -73,7 +81,11 @@ std::string Target::getCaracteresTarget()
             else if(this->color == GREEN)
             {
                 return "CG";
-            }          
+            }  
+            else if(this->color == MULTICOLOR)
+            {
+                return "CM";  
+            }            
         break;
         case DIAMOND:
             if(this->color == RED)
@@ -91,9 +103,14 @@ std::string Target::getCaracteresTarget()
             else if(this->color == GREEN)
             {
                 return "DG";
-            }          
+            }
+            else if(this->color == MULTICOLOR)
+            {
+                return "DM";  
+            }
+                        
         break;
     }
-    return 0;
+    return "..";
 
 }

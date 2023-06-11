@@ -25,25 +25,25 @@ void Robot::setPrevPosition(Position newPosition) {
     prevPosition = newPosition;
 }
 
-std::string Robot::getCaractereColorRobot()const
+std::string Robot::getCaractereColorRobot()const// retourne "R" pour robot + initiale couleur
 {
     switch(this->color){
     case (RED):
-        return "RR";
+        return "(RR)";
     break;
     case (YELLOW):
-        return "RY";
+        return "(RY)";
     break;  
     case (BLUE):
-        return "RB";
+        return "(RB)";
     break;  
     case (GREEN):
-        return "RG";
+        return "(RG)";
     break;  
     case (MULTICOLOR):
-        return "RM";
+        return "(RM)";
     break;    
     }
 
-    return 0;
+    return "....";
 }

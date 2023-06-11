@@ -6,7 +6,7 @@ EXEC=main
 all: $(EXEC)
 
 
-main: main.o Case/Case.o Player/Player.o Game/Game.o Position/Position.o Robot/Robot.o Target/Target.o utilitaires/utilitaires.o
+main: main.o Case/Case.o Player/Player.o Game/Game.o Position/Position.o Robot/Robot.o Target/Target.o
 
 	$(CC) -o $@ $^ $(LDFLAGS)
 

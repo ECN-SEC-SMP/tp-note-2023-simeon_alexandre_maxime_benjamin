@@ -216,3 +216,251 @@ bool Game::isTargetReached(const Target& target) const{
     }
     return false;
 }
+
+Position Game::mur_exterieur_horizontale(int quart_plateau)//genere aleatoirement un mur exterieur horizontale
+{
+
+    
+    for(int i = 0;i < 100000000;i++){}// créer une attente avant de gerner un autre nombre aleatoire
+    
+    Position mur_hor(0,0);//init coordonnee du mur
+
+    switch(quart_plateau){
+    case premier_quart: //premier quart haut gauche      
+        srand( time( NULL ) );
+        mur_hor.setX(0); //x =0
+        mur_hor.setY(0);
+        mur_hor.setY(1 + rand() % 7);// y doit etre compris entre 1 et 7 
+    break;
+    case deuxieme_quart:// deuxieme quart haut droit
+        srand( time( NULL ) );
+        mur_hor.setX(15); //x =15
+        mur_hor.setY(0);
+        mur_hor.setY(1 + rand() % 7);   // y doit etre compris entre 1 et 7 
+    break;
+    case troisieme_quart: //troisieme quart bas droit
+        srand( time( NULL ) );
+        mur_hor.setX(15); //x = 15
+        mur_hor.setY(0);
+        mur_hor.setY(rand() % 7 + 8);  //y doit etre compris entre   8 et 14
+    break;
+    case quatrieme_quart:
+        srand( time( NULL ) );
+        mur_hor.setX(0); //x = 0
+        mur_hor.setY(0);
+        mur_hor.setY(rand() % 7 + 8);  //y doit etre compris entre 8 et 14
+    break;
+
+    default:
+        mur_hor.setX(0);
+        mur_hor.setY(0);            
+  }  
+   
+   return mur_hor;
+}
+
+Position Game::mur_exterieur_vertical(int quart_plateau)//genere aleatoirement un mur exterieur vertical
+{
+    
+    for(int i = 0;i < 10000000;i++){}// créer une attente pour assurer le changement de seed pour srand
+    Position mur(0,0);
+
+    switch(quart_plateau){
+    case premier_quart: //quart haut gauche        
+        srand( time( NULL ) );
+        mur.setY(0); //y = 0
+        mur.setX(0);
+        mur.setX(1 + rand() % 7); //x doit etre compris entre 1 et 7
+    break;
+    case deuxieme_quart: //quart haut droit
+        srand( time( NULL ) );
+        mur.setY(0); // y = 0
+        mur.setX(0);
+        mur.setX(rand() % 7 + 8);    //x doit etre compris entre 8 et 14
+    break;
+    case troisieme_quart:
+        srand( time( NULL ) );
+        mur.setY(15); // y = 15
+        mur.setX(0);
+        mur.setX(rand() % 7 + 8);  // x dot etre entre 8 et 14  
+    break;
+    case quatrieme_quart:// quart bas gauche
+        srand( time( NULL ) );
+        mur.setY(15); //y = 15
+        mur.setX(0);
+        mur.setX(1 + rand() % 7);  //x doit etre compris 1 et 7  
+    break;  
+    default:
+        mur.setX(0);
+        mur.setY(0);     
+
+  }  
+
+  return mur; 
+}
+
+Case* Game::creerPlateau(Case* c[16][16])
+{ 
+    //instanciation des 16 cases du plateau   
+    for(int y=0;y<16;y++)
+    {
+        for(int x=0; x<16;x++)
+        {            
+            c[y][x] = new Case();                 
+          
+        }
+    }
+
+    return c[16][16]; //retourne le plateau
+}
+
+void Game::afficher_plateau(Case* c[16][16])//affiche les 16 cases du plateau
+{
+    //genere la ligne du bord haut
+    for(int i=0;i<16;i++)
+    {
+        cout << " ____";
+    }
+    cout << endl;
+
+    //affiche le plateau avec les 16 cases
+   for(int y=0;y<16;y++)
+    {
+        for(int x=0; x<16;x++)
+        {  
+            c[y][x]->affichage_case(c,x,y);
+            
+        }
+        cout << "|" << endl;//affiche le bord droit
+        
+    }
+}
+
+
+void Game::plateauInit(Case* plateau[16][16])
+{
+    //generer mur exterieur pour les 4 quart du plateau
+   for(int quart_plateau = premier_quart;quart_plateau <= quatrieme_quart; quart_plateau++)
+   {
+        Position premier_quart_horiz = mur_exterieur_horizontale(quart_plateau);//genere coodonnees mur exterieur vertical 
+        for(int i = 0;i < 1000000000;i++){}
+        Position premier_quart_vert = mur_exterieur_vertical(quart_plateau);//genere coordonnees mur ext vertical
+
+        plateau[premier_quart_horiz.getX()][premier_quart_horiz.getY()]->setMurG(1);//cree mur ext
+        plateau[premier_quart_vert.getX()][premier_quart_vert.getY()]->setMurB(1);//cree mur int
+   }  
+
+   //generer mur interieur et leur cible pour chaque quart
+    for(int quart_plateau = premier_quart;quart_plateau<=quatrieme_quart;quart_plateau++)
+    {
+        Symbol symbolTarget;
+
+        for(int i = 0;i<4;i++)//gener quatre mur interieur
+        {
+            //une forme par quart
+            if(i == 0)
+            {
+                symbolTarget  = TRIANGLE;
+            }
+            else if(i == 1)
+            {
+                symbolTarget  = CIRCLE;
+            } 
+            else if(i == 2)
+            {
+                symbolTarget  = SQUARE;
+            }   
+            else if(i == 3)
+            {
+                symbolTarget  = DIAMOND;
+            }    
+
+            for(int i = 0;i < 100000000;i++){}
+            murInterieur(plateau,quart_plateau,symbolTarget);//cree le mur interieur          
+        }        
+        cout << endl;
+    } 
+
+}
+
+void Game::murInterieur(Case* plateau[16][16], int quart_plateau,Symbol symbolTarget)//genere mur interieur avec ca cible
+{
+    //genrre couleur aleatoire pour target
+   int c = 0;
+   Color couleur;
+    c = rand() % 5;// 5 choix de couleur entre 0 et 4
+    switch(c){
+        case 0:
+            couleur = RED;
+        break;
+        case 1:
+            couleur = YELLOW;
+        break;  
+        case 2:
+            couleur = BLUE;
+        break;
+        case 3:
+            couleur = GREEN;
+        break;  
+        default :
+            couleur  = MULTICOLOR;            
+    } 
+
+    //genere position aleatoire mur interieur    
+    for(int i = 0;i < 10000000;i++){}
+    
+    Position p(0,0);
+
+    switch(quart_plateau){
+    case premier_quart:// quart haut gauche         
+
+        p.setX(2 + rand() % 5); // x entre 2 et 6 pour ne pas toucher mur ext ni carre centrale 
+        for(int i = 0;i < 1000000;i++){}
+        p.setY(2 + rand() % 5);// y entre 2 et 6 pour ne pas toucher mur ext ni carre centrale 
+    break;
+    case deuxieme_quart:// quart haut droit
+        
+        p.setX(rand() % 6 + 9);// x entre 9 et 14 pour ne pas toucher bord ni carre centrale 
+        for(int i = 0;i < 1000000;i++){}
+        p.setY(2 + rand() % 5); // y entre 2 et 6 pour ne pas toucher bord ni carre centrale 
+
+    break;
+    case troisieme_quart: //quart bas droit
+        p.setX(rand() % 6 + 9);// x entre 9 et 14 pour ne pas toucher bord ni carre centrale 
+        for(int i = 0;i < 1000000;i++){}
+        p.setY(rand() % 5 + 9); // y entre 9 et 14 pour ne pas toucher bord ni carre centrale 
+          
+    break;
+    case quatrieme_quart: //quart bas gauche
+        p.setX(2 + rand() % 5);// x entre 2 et 6 pour ne pas toucher bord ni carre centrale 
+        for(int i = 0;i < 1000000;i++){}
+        p.setY(rand() % 5 + 9); // x entre 9 et 14 pour ne pas toucher bord ni carre centrale 
+          
+    break;  
+    default:
+        p.setX(0);
+        p.setY(0);  
+    }     
+
+    //verifie qu'il ny ai pas 2 angle cote a cote
+    if(plateau[p.getY()][p.getX()]->getAngle() == NONE
+    
+        && plateau[p.getY()-1][p.getX()-1]->getAngle() == NONE && plateau[p.getY()-1][p.getX()+1]->getAngle() == NONE //pas d'angle diagonal bas gauche et bas droit
+        && plateau[p.getY()+1][p.getX()+1]->getAngle() == NONE && plateau[p.getY()+1][p.getX()-1]->getAngle() == NONE //pas d'angle diagonal haut gauche et bas droit
+        && plateau[p.getY()][p.getX()+1]->getAngle() == NONE && plateau[p.getY()][p.getX()-1]->getAngle() == NONE//pas d'angle a droite ni a gauche
+        && plateau[p.getY()-1][p.getX()]->getAngle() == NONE && plateau[p.getY()+1][p.getX()]->getAngle() == NONE// pas d'angle ni en haut ni en bas     
+
+        && plateau[p.getY()][p.getX()]->getAngle() == NONE)//verifie que la case n'a pas deja un angle
+    {
+        plateau[p.getY()][p.getX()]->setAngle();// cree un angle dan la case 
+        Target* newTarget = new Target(couleur,symbolTarget,p); 
+        plateau[p.getY()][p.getX()]->setTarget(newTarget);//cree une cible dans la case            
+    }
+    else
+    {
+        murInterieur(plateau,quart_plateau,symbolTarget);//si il y a un angle trop proche, rappel de la fonction
+
+    }      
+
+}
+

@@ -34,6 +34,20 @@ public:
     void moveRobot(Robot& robot, Direction direction);
 
     bool isTargetReached(const Target& target) const;
+
+    Position mur_exterieur_horizontale(int quart_plateau);
+
+    Position mur_exterieur_vertical(int quart_plateau);
+
+    void afficher_plateau(Case* c[16][16]);
+
+    Case *creerPlateau(Case* c[16][16]);
+
+    void plateauInit(Case* plateau[16][16]);
+    
+    void murInterieur(Case* plateau[16][16], int quart_plateau, Symbol symbolTarget);
+
+    void genererRobot(Case* plateau[16][16],Color _color);
     
 };
 
@@ -54,3 +68,4 @@ for (int i = 0; i < 16; ++i) {
     }
 }
 */
+
