@@ -240,12 +240,12 @@ void Game::moveRobot(Robot& robot, Direction direction){
 }
 
 // Did the robot reach the target?
-bool Game::isTargetReached(const Target& target) const{
+bool Game::isTargetReached(const Target* target) const{
     int8_t x, y;
-    x = target.getPosition().getX();
-    y = target.getPosition().getY();
+    x = target->getPosition().getX();
+    y = target->getPosition().getY();
 
-    if(plateau[x][y].getRobot()->getColor() == target.getColor()){
+    if(plateau[x][y].getRobot()->getColor() == target->getColor()){
         return true;
     }
     return false;
