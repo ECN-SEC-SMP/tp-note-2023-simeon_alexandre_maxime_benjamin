@@ -38,7 +38,7 @@ public:
 
     void playTurn();
 
-    void moveRobot(Robot& robot, Direction direction);
+    void moveRobot(Robot* robot, Direction direction);
 
     bool isTargetReached(const Target& target) const;
 
