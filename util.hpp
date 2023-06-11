@@ -1,4 +1,9 @@
 #pragma once
+/**
+ * @defgroup util util.hpp
+ * 
+* 
+*/
 
 enum Color {
     RED,

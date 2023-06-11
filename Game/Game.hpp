@@ -23,11 +23,16 @@ using namespace std;
 class Game {
 private:
     vector<Robot*> robots;
-    vector<Target> targets;
+    vector<Target*> targets;
     vector<Player*> joueurs;
     Robot* createRobot(Color color);
+<<<<<<< HEAD
     array<array<Case,16>,16> plateau;
     Robot* findRobot(string color);  
+=======
+    array<array<Case,16>,16> plateau; 
+    Robot* findRobot(string color); 
+>>>>>>> 2f0e0ab56c10f2ee8b79baa32cb7e68769510c32
 
 public:
     Game(void);
