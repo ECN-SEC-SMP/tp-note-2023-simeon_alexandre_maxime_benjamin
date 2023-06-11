@@ -26,13 +26,10 @@ private:
     vector<Target*> targets;
     vector<Player*> joueurs;
     Robot* createRobot(Color color);
-<<<<<<< HEAD
+
     array<array<Case,16>,16> plateau;
     Robot* findRobot(string color);  
-=======
-    array<array<Case,16>,16> plateau; 
-    Robot* findRobot(string color); 
->>>>>>> 2f0e0ab56c10f2ee8b79baa32cb7e68769510c32
+
 
 public:
     Game(void);
@@ -55,9 +52,13 @@ public:
 
     void plateauInit(Case* plateau[16][16]);
     
-    void murInterieur(Case* plateau[16][16], int quart_plateau, Symbol symbolTarget);
+    Target* murInterieur(Case* plateau[16][16], int quart_plateau,Symbol symbolTarget,vector <Color> color);
 
     void genererRobot(Case* plateau[16][16],Color _color);
+
+    Color genererCouleurAleatoire(int quart, Case* plateau[16][16], vector <Color>);
+
+    void generer17emeTarget(Case* plateau[16][16]);
     
 };
 
@@ -78,4 +79,3 @@ for (int i = 0; i < 16; ++i) {
     }
 }
 */
-

@@ -1,4 +1,10 @@
 #include "Game.hpp"
+#include <algorithm>
+
+    vector<Color> colorPremierQuart;
+    vector<Color> colorTroisiemeQuart;
+    vector<Color> colorDeuxiemeQuart;
+    vector<Color> colorQuatriemeQuart;
 
 Game::Game(void) {}
 
@@ -34,13 +40,13 @@ Robot* Game::createRobot(Color color){
     return z; 
 }
 
-Robot* Game::findRobot(string color){
+/*Robot* Game::findRobot(string color){
     color= capitalizeString(color);
     if (color == "RED" || "ROUGE") return robots[0];
     else if (color == "BLUE" || "BLEU") return robots[1];
     else if (color == "YELLOW" || "JAUNE") return robots[2];
     else (color == "GREEN" || "VERT") return robots[3];
-}
+}*/
 
 void Game::iniGame(){
     bool nbok = false;
@@ -97,7 +103,7 @@ void Game::iniGame(){
 }
 
 void Game::playTurn() {
-    int nbval = 0; 
+    unsigned nbval = 0; 
     string nom; 
     string nbc =0; 
     bool J =false; 
@@ -110,7 +116,7 @@ void Game::playTurn() {
         cout << "nom joueur :" ;
         cin >> nom;
         while (J == false){
-        for (int i = 0; i=joueurs.size(); i++){ //on test que le joueur existe et récupère son numéro 
+        for (unsigned i = 0; i==joueurs.size(); i++){ //on test que le joueur existe et récupère son numéro 
             if (nom==joueurs[i]->getName()) { 
                 J = true; // on trouve le joueur
                 temp= joueurs[i];
@@ -134,19 +140,19 @@ void Game::playTurn() {
         }
         int nb = atoi(nbc.c_str()); // conversion en entier
         // nbmvt.push_back(nb);
-        for (int i =0;i=nbmvt.size(); i++){
+        for (unsigned i =0;i==nbmvt.size(); i++){
             if (nb >=nbmvt[i]){
                nbmvt.insert(nbmvt.begin()+i, nb);
                ordrePlayer.insert(ordrePlayer.begin()+i, temp);
             }
         } 
     }
-    for (int i=0; i=joueurs.size();i++){ // laisser les joueurs réaliser leurs essais 
-        for (int u; u=nbmvt[i]; u++){ //le joueur va réaliser les n mvt qu'il a indiqué 
+    /*for (unsigned i=0; i==joueurs.size();i++){ // laisser les joueurs réaliser leurs essais 
+        for (unsigned u; u==nbmvt[i]; u++){ //le joueur va réaliser les n mvt qu'il a indiqué 
             cout << "couleur robot : "; 
             cin >> color; 
         }
-    }
+    }*/
 }
 
 void Game::moveRobot(Robot& robot, Direction direction){
@@ -338,7 +344,28 @@ void Game::afficher_plateau(Case* c[16][16])//affiche les 16 cases du plateau
 
 
 void Game::plateauInit(Case* plateau[16][16])
-{
+{  
+    //Target* cible; 
+
+   colorPremierQuart.push_back(RED);
+   colorPremierQuart.push_back(YELLOW);
+   colorPremierQuart.push_back(BLUE);
+   colorPremierQuart.push_back(GREEN);
+
+   colorDeuxiemeQuart.push_back(RED);
+   colorDeuxiemeQuart.push_back(YELLOW);
+   colorDeuxiemeQuart.push_back(BLUE);
+   colorDeuxiemeQuart.push_back(GREEN);
+
+   colorTroisiemeQuart.push_back(RED);
+   colorTroisiemeQuart.push_back(YELLOW);
+   colorTroisiemeQuart.push_back(BLUE);
+   colorTroisiemeQuart.push_back(GREEN);
+
+   colorQuatriemeQuart.push_back(RED);
+   colorQuatriemeQuart.push_back(YELLOW);
+   colorQuatriemeQuart.push_back(BLUE);
+   colorQuatriemeQuart.push_back(GREEN);
     //generer mur exterieur pour les 4 quart du plateau
    for(int quart_plateau = premier_quart;quart_plateau <= quatrieme_quart; quart_plateau++)
    {
@@ -376,35 +403,37 @@ void Game::plateauInit(Case* plateau[16][16])
             }    
 
             for(int i = 0;i < 100000000;i++){}
-            murInterieur(plateau,quart_plateau,symbolTarget);//cree le mur interieur          
-        }        
-        cout << endl;
+            /*cible =*/ murInterieur(plateau,quart_plateau,symbolTarget,colorPremierQuart);//cree le mur interieur  
+            /*if(cible->getColor() == RED)
+            {
+                colorPremierQuart.erase(colorPremierQuart.begin());
+            }
+            else if(cible->getColor() == YELLOW)
+            {
+                colorPremierQuart.erase(colorPremierQuart.begin()+1);
+            }  
+            else if(cible->getColor() == BLUE)
+            {
+                colorPremierQuart.erase(colorPremierQuart.begin()+2);
+            }   
+            else if(cible->getColor() == GREEN)
+            {
+                colorPremierQuart.erase(colorPremierQuart.begin()+3);
+            }  */                             
+         }        
+         cout << endl;
+//             
     } 
+
+    generer17emeTarget(plateau);
 
 }
 
-void Game::murInterieur(Case* plateau[16][16], int quart_plateau,Symbol symbolTarget)//genere mur interieur avec ca cible
+Target* Game::murInterieur(Case* plateau[16][16], int quart_plateau,Symbol symbolTarget,vector <Color> color)//genere mur interieur avec ca cible
 {
-    //genrre couleur aleatoire pour target
-   int c = 0;
-   Color couleur;
-    c = rand() % 5;// 5 choix de couleur entre 0 et 4
-    switch(c){
-        case 0:
-            couleur = RED;
-        break;
-        case 1:
-            couleur = YELLOW;
-        break;  
-        case 2:
-            couleur = BLUE;
-        break;
-        case 3:
-            couleur = GREEN;
-        break;  
-        default :
-            couleur  = MULTICOLOR;            
-    } 
+
+
+    Color couleur = genererCouleurAleatoire(quart_plateau,plateau,color);
 
     //genere position aleatoire mur interieur    
     for(int i = 0;i < 10000000;i++){}
@@ -454,13 +483,71 @@ void Game::murInterieur(Case* plateau[16][16], int quart_plateau,Symbol symbolTa
     {
         plateau[p.getY()][p.getX()]->setAngle();// cree un angle dan la case 
         Target* newTarget = new Target(couleur,symbolTarget,p); 
-        plateau[p.getY()][p.getX()]->setTarget(newTarget);//cree une cible dans la case            
+        plateau[p.getY()][p.getX()]->setTarget(newTarget);//cree une cible dans la case    
+        targets.push_back(newTarget); 
+
+        return newTarget;       
     }
     else
     {
-        murInterieur(plateau,quart_plateau,symbolTarget);//si il y a un angle trop proche, rappel de la fonction
+        murInterieur(plateau,quart_plateau,symbolTarget,color);//si il y a un angle trop proche, rappel de la fonction
 
-    }      
+    }  
+
+    Target* t = new Target(GREEN,DIAMOND,Position(0,0));
+    t->getPosition();
+
+    return t;
 
 }
 
+Color Game::genererCouleurAleatoire(int quart, Case* plateau[16][16], vector <Color> color)
+{
+     
+   int c = 0;
+   Color couleur;
+   c = rand() % (color.size());// 5 choix de couleur entre 0 et 4
+   couleur = color[c];
+   
+
+    for(int y=0;y<8;y++)
+    {
+        for(int x=0;x<8;x++)
+        {
+            if(plateau[x][y]->getTarget() != nullptr && plateau[y][x]->getTarget()->getColor() == couleur)
+            {
+                for(int i = 0;i < 1000000;i++){}
+                genererCouleurAleatoire(quart,plateau,color);
+            }
+            else
+            {
+                return couleur;
+            }
+        }
+    }
+
+
+
+    return couleur;
+}
+
+void Game::generer17emeTarget(Case* plateau[16][16])
+{
+    Position p(0,0);
+    p.setX(1 + rand() % 14);
+    p.setY(1 + rand() % 14);
+
+    if((p.getX() == 7 && p.getY() == 7) || (p.getX() == 8 && p.getY() == 7) ||(p.getX() == 8 && p.getY() == 8) ||(p.getX() == 7 && p.getY() == 8) || plateau[p.getY()][p.getX()]->getAngle() != NONE)
+    {
+        generer17emeTarget(plateau);
+    }
+    else
+    {
+        Target* t = new Target(MULTICOLOR,DIAMOND,p);
+        targets.push_back(t); 
+        plateau[p.getY()][p.getX()]->setAngle();
+        plateau[p.getY()][p.getX()]->setTarget(t);
+    }
+
+
+}
