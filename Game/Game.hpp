@@ -40,7 +40,7 @@ public:
 
     void moveRobot(Robot* robot, Direction direction);
 
-    bool isTargetReached(const Target& target) const;
+    bool isTargetReached(const Target* target) const;
 
     Position mur_exterieur_horizontale(int quart_plateau);
 
