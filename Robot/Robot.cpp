@@ -25,7 +25,7 @@ void Robot::setPrevPosition(Position newPosition) {
     prevPosition = newPosition;
 }
 
-std::string Robot::getCaractereColorRobot()const
+std::string Robot::getCaractereColorRobot()const// retourne "R" pour robot + initiale couleur
 {
     switch(this->color){
     case (RED):

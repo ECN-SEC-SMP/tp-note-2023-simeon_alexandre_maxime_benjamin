@@ -37,6 +37,7 @@ public:
 
     // Target
     void setTarget(Target* newTarget);
+    
     Target* getTarget(void) const;
 
     void affichage_case(Case* c[16][16],int x, int y);
