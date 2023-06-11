@@ -1,3 +1,8 @@
+/**
+*@file Game.hpp
+*@author Benjamin Siméon Maxime Alexandre
+*@date 2023  
+*/
 #pragma once 
 #include <iostream>
 #include <vector>
@@ -21,7 +26,8 @@ private:
     vector<Target> targets;
     vector<Player*> joueurs;
     Robot* createRobot(Color color);
-    array<array<Case,16>,16> plateau;  
+    array<array<Case,16>,16> plateau;
+    Robot* findRobot(string color);  
 
 public:
     Game(void);

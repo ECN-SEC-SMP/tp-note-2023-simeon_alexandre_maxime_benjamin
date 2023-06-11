@@ -1,3 +1,9 @@
+/**
+*@file Robot.hpp
+*@author Benjamin Siméon Maxime Alexandre
+*@date 2023  
+*/
+
 #pragma once 
 #include "string"
 #include "stdlib.h"

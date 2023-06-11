@@ -1,3 +1,10 @@
+/**
+ * @defgroup main main.cpp
+ * projet pricpila
+ * @image{inline} html Capture.PNG "use case"
+* 
+*/
+
 #include <iostream>
 #include "Game/Game.hpp"
 #include "Position/Position.hpp"
@@ -7,12 +14,13 @@
 #include "Case/Case.hpp"
 #include "util.hpp" // test
 
-
-
-
 using namespace std;
 
+
+
 int main() { 
+
+
 
     srand( time( NULL ) );  
     Case* plateau[16][16] = {nullptr}; 
