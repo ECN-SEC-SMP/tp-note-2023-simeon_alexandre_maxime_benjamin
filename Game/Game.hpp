@@ -18,7 +18,7 @@ using namespace std;
 class Game {
 private:
     vector<Robot*> robots;
-    vector<Target> targets;
+    vector<Target*> targets;
     vector<Player*> joueurs;
     Robot* createRobot(Color color);
     array<array<Case,16>,16> plateau; 
