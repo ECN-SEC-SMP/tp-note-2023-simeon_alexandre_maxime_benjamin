@@ -161,8 +161,8 @@ bool Game::playTurn(Target* target) {
             else if (nbc =="0" || nbc == "1" || nbc == "2"){ // si nombre vérifier si >2
                 cout << "inferieur ou egale a 2, recommencez : ";
                 cin >> nbc; 
-                }  
-                else nbok = true; 
+            }  
+            else nbok = true; 
         }
         int nb = atoi(nbc.c_str()); // conversion en entier
         if (nbmvt.size() == 0) nbmvt.push_back(nb);
@@ -199,9 +199,19 @@ bool Game::playTurn(Target* target) {
             direction = findPosition(mvt);
             // Robot& test = findRobot(color); 
             moveRobot(findRobot(color) , direction);
-
+            afficher_plateau(target);
         }
-        if (isTargetReached(target)) return true; 
+        if (isTargetReached(target)){
+            for(int i=0;i<=4;i++){
+                robots[i]->setPrevPosition(robots[i]->getPosition()); // sauvegarde position
+            }
+            return true; 
+        }
+        for(int i=0;i<=4;i++){
+            plateau[robots[i]->getPosition().getY()][robots[i]->getPosition().getX()].setRobot(nullptr);
+            robots[i]->setPosition(robots[i]->getPrevPosition()); // replace les robots
+            plateau[robots[i]->getPosition().getY()][robots[i]->getPosition().getX()].setRobot(robots[i]);
+        }
     }
     return false; 
 
@@ -221,6 +231,8 @@ void Game::moveRobot(Robot* robot, Direction direction){
             }
             else{
                 robot->setPosition(Position(robot->getPosition().getX(), robot->getPosition().getY()-1)); // déplace le robot en haut
+                plateau[robot->getPosition().getY()][robot->getPosition().getX()].setRobot(nullptr);
+                plateau[robot->getPosition().getY()-1][robot->getPosition().getX()].setRobot(robot);
             }
             break;
 
@@ -233,6 +245,8 @@ void Game::moveRobot(Robot* robot, Direction direction){
             }
             else{
                 robot->setPosition(Position(robot->getPosition().getX(), robot->getPosition().getY()+1)); // déplace le robot en bas
+                plateau[robot->getPosition().getY()][robot->getPosition().getX()].setRobot(nullptr);
+                plateau[robot->getPosition().getY()+1][robot->getPosition().getX()].setRobot(robot);
             }
             break;
 
@@ -245,6 +259,8 @@ void Game::moveRobot(Robot* robot, Direction direction){
             }
             else{
                 robot->setPosition(Position(robot->getPosition().getX()-1, robot->getPosition().getY())); // déplace le robot à gauche
+                plateau[robot->getPosition().getY()][robot->getPosition().getX()].setRobot(nullptr);
+                plateau[robot->getPosition().getY()][robot->getPosition().getX()-1].setRobot(robot);
             }
             break;
 
@@ -257,6 +273,8 @@ void Game::moveRobot(Robot* robot, Direction direction){
             }
             else{
                 robot->setPosition(Position(robot->getPosition().getX()+1, robot->getPosition().getY())); // déplace le robot à droite
+                plateau[robot->getPosition().getY()][robot->getPosition().getX()].setRobot(nullptr);
+                plateau[robot->getPosition().getY()][robot->getPosition().getX()+1].setRobot(robot);
             }
             break;
         }
