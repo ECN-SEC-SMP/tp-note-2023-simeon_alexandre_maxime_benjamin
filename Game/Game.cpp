@@ -42,6 +42,7 @@ Robot* Game::createRobot(Color color){
     }
     // cout<< "creation pointeur de robot"<<endl;
     Robot* z = new Robot (color, p);
+    plateau[p.getY()][p.getX()].setRobot(z);
     return z; 
 }
 
@@ -208,10 +209,10 @@ void Game::moveRobot(Robot* robot, Direction direction){
         switch (direction)
         {
         case UP:
-            if(plateau[robot->getPosition().getX()][robot->getPosition().getY()].getMurH()){ // teste le mur
+            if(plateau[robot->getPosition().getY()][robot->getPosition().getX()].getMurH()){ // teste le mur
                 blocked=true;
             }
-            else if(plateau[robot->getPosition().getX()][robot->getPosition().getY()-1].getRobot()!=nullptr){ // teste s'il y a un robot
+            else if(plateau[robot->getPosition().getY()][robot->getPosition().getX()-1].getRobot()!=nullptr){ // teste s'il y a un robot
                 blocked=true;
             }
             else{
@@ -220,10 +221,10 @@ void Game::moveRobot(Robot* robot, Direction direction){
             break;
 
         case DOWN:
-            if(plateau[robot->getPosition().getX()][robot->getPosition().getY()].getMurB()){ // teste le mur
+            if(plateau[robot->getPosition().getY()][robot->getPosition().getX()].getMurB()){ // teste le mur
                 blocked=true;
             }
-            else if(plateau[robot->getPosition().getX()][robot->getPosition().getY()+1].getRobot()!=nullptr){ // teste s'il y a un robot
+            else if(plateau[robot->getPosition().getY()][robot->getPosition().getX()+1].getRobot()!=nullptr){ // teste s'il y a un robot
                 blocked=true;
             }
             else{
@@ -232,10 +233,10 @@ void Game::moveRobot(Robot* robot, Direction direction){
             break;
 
         case LEFT:
-            if(plateau[robot->getPosition().getX()][robot->getPosition().getY()].getMurG()){ // teste le mur
+            if(plateau[robot->getPosition().getY()][robot->getPosition().getX()].getMurG()){ // teste le mur
                 blocked=true;
             }
-            else if(plateau[robot->getPosition().getX()-1][robot->getPosition().getY()].getRobot()!=nullptr){ // teste s'il y a un robot
+            else if(plateau[robot->getPosition().getY()-1][robot->getPosition().getX()].getRobot()!=nullptr){ // teste s'il y a un robot
                 blocked=true;
             }
             else{
@@ -244,10 +245,10 @@ void Game::moveRobot(Robot* robot, Direction direction){
             break;
 
         default:
-            if(plateau[robot->getPosition().getX()][robot->getPosition().getY()].getMurD()){ // teste le mur
+            if(plateau[robot->getPosition().getY()][robot->getPosition().getX()].getMurD()){ // teste le mur
                 blocked=true;
             }
-            else if(plateau[robot->getPosition().getX()+1][robot->getPosition().getY()].getRobot()!=nullptr){ // teste s'il y a un robot
+            else if(plateau[robot->getPosition().getY()+1][robot->getPosition().getX()].getRobot()!=nullptr){ // teste s'il y a un robot
                 blocked=true;
             }
             else{
@@ -264,7 +265,7 @@ bool Game::isTargetReached(const Target* target) const{
     x = target->getPosition().getX();
     y = target->getPosition().getY();
 
-    if((plateau[x][y].getRobot()->getColor() == target->getColor()) || (plateau[x][y].getRobot() && target->getColor() == MULTICOLOR)){
+    if((plateau[y][x].getRobot()->getColor() == target->getColor()) || (plateau[y][x].getRobot() && target->getColor() == MULTICOLOR)){
         return true;
     }
     return false;
@@ -517,8 +518,8 @@ void Game::genererTargets(){
     int cptTargets=0;
     for(int x=0;x<16;x++){
         for(int y=0;y<16;y++){
-            if(plateau[x][y].getAngle()!=NONE){
-                plateau[x][y].setTarget(targets[cptTargets]);
+            if(plateau[y][x].getAngle()!=NONE){
+                plateau[y][x].setTarget(targets[cptTargets]);
                 p.setX(x);
                 p.setY(y);
                 targets[cptTargets]->setPosition(p);
