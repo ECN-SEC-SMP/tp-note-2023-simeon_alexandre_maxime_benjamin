@@ -107,15 +107,15 @@ void Game::iniGame(){
     robots.push_back(createRobot(RED)); 
     // cout << "couleur du robot 0 : " << robots[0]->getColor() <<", position en x : " <<  robots[0]->getPosition().getX() << " et position en y : " << robots[0]->getPosition().getY() << endl; 
     robots.push_back(createRobot(BLUE));
-    // cout << "couleur du robot 0 : " << robots[1]->getColor() <<", position en x : " <<  robots[1]->getPosition().getX() << " et position en y : " << robots[1]->getPosition().getY() << endl; 
+    // cout << "couleur du robot 1 : " << robots[1]->getColor() <<", position en x : " <<  robots[1]->getPosition().getX() << " et position en y : " << robots[1]->getPosition().getY() << endl; 
     robots.push_back(createRobot(YELLOW));
-    // cout << "couleur du robot 0 : " << robots[2]->getColor() <<", position en x : " <<  robots[2]->getPosition().getX() << " et position en y : " << robots[2]->getPosition().getY() << endl; 
+    // cout << "couleur du robot 2 : " << robots[2]->getColor() <<", position en x : " <<  robots[2]->getPosition().getX() << " et position en y : " << robots[2]->getPosition().getY() << endl; 
     robots.push_back(createRobot(GREEN));
-    // cout << "couleur du robot 0 : " << robots[3]->getColor() <<", position en x : " <<  robots[3]->getPosition().getX() << " et position en y : " << robots[3]->getPosition().getY() << endl; 
+    // cout << "couleur du robot 3 : " << robots[3]->getColor() <<", position en x : " <<  robots[3]->getPosition().getX() << " et position en y : " << robots[3]->getPosition().getY() << endl; 
     cout << "fin initialisation, la partie peut commencer"<< endl;
 }
 
-bool Game::playTurn(const Target* target) {
+bool Game::playTurn(Target* target) {
     unsigned nbval = 0; 
     string nom; 
     string nbc; 
@@ -127,7 +127,7 @@ bool Game::playTurn(const Target* target) {
     string color;  
     string mvt; 
     Direction direction; 
-    afficher_plateau();
+    afficher_plateau(target);
     while (nbval != joueurs.size()){
         cout << "entree while"<<endl; 
         cout << "nom joueur :" ;
@@ -353,7 +353,7 @@ Position Game::mur_exterieur_vertical(int quart_plateau)//genere aleatoirement u
 }
 
 
-void Game::afficher_plateau()//affiche les 16 cases du plateau
+void Game::afficher_plateau(Target* target)//affiche les 16 cases du plateau
 {
     //genere la ligne du bord haut
     for(int i=0;i<16;i++)
@@ -367,7 +367,7 @@ void Game::afficher_plateau()//affiche les 16 cases du plateau
     {
         for(int x=0; x<16;x++)
         {  
-            affichage_case(x,y);
+            affichage_case(target,x,y);
         }
         cout << "|" << endl;//affiche le bord droit
         
@@ -536,21 +536,25 @@ vector<Player*> Game::getPlayerVector(void){
     return joueurs;
 }
 
-void Game::affichage_case(int x, int y)//gere l'affichage d'une seul case : murG et murB
+void Game::affichage_case(Target* target, int x, int y)//gere l'affichage d'une seul case : murG et murB
 {
     
     //carre centrale du plateau
     plateau[7][7].setMurG(true);
     plateau[7][7].setMurH(true);
+    plateau[7][7].setTarget(target);
 
     plateau[8][7].setMurG(true);
     plateau[8][7].setMurB(true);
+    plateau[8][7].setTarget(target);
 
     plateau[7][8].setMurH(true);
     plateau[7][8].setMurD(true);
+    plateau[7][8].setTarget(target);
 
     plateau[8][8].setMurD(true);
     plateau[8][8].setMurB(true);
+    plateau[8][8].setTarget(target);
  
 
     //bord du plateaau 

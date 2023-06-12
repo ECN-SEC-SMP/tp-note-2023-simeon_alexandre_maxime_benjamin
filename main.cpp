@@ -26,7 +26,7 @@ int main() {
     for(int turn=0;turn<=17;turn++){
         g.playTurn(g.getTargetVector()[turn]);
     }
-    for(int i; i<g.getPlayerVector().size(); i++){
+    for(int i=0; i<g.getPlayerVector().size(); i++){
         cout << "Score de " << g.getPlayerVector()[i]->getName() << " : " << g.getPlayerVector()[i]->getScore() << endl;
     }
 }

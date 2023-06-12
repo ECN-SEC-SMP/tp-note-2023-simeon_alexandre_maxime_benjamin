@@ -39,14 +39,14 @@ private:
     *@param[in] int x valeur dans la boucle qui va parcourir les x dans l'affchage du plateau
     *@param[in] int x valeur dans la boucle qui va parcourir les y dans l'affchage du plateau
     */
-    void affichage_case(int x, int y);
+    void affichage_case(Target* target, int x, int y);
 
 public:
     Game(void);
 
     void iniGame();
 
-    bool playTurn(const Target* target);
+    bool playTurn(Target* target);
 
     void moveRobot(Robot* robot, Direction direction);
 
@@ -56,7 +56,7 @@ public:
 
     Position mur_exterieur_vertical(int quart_plateau);
 
-    void afficher_plateau(void);
+    void afficher_plateau(Target* target);
 
     void plateauInit(void);
     
