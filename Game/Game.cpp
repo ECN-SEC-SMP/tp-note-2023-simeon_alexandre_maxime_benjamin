@@ -157,7 +157,11 @@ bool Game::playTurn(Target* target) {
                 cout << "pas un nombre, recommencez : ";
                 cin >> nbc;             //On demande un nouveau nombre
             }
-            else nbok = true; 
+            else if (nbc =="0" || nbc == "1" || nbc == "2"){ // si nombre vérifier si >2
+                cout << "inferieur ou egale a 2, recommencez : ";
+                cin >> nbc; 
+                }  
+                else nbok = true; 
         }
         int nb = atoi(nbc.c_str()); // conversion en entier
         if (nbmvt.size() == 0) nbmvt.push_back(nb);
