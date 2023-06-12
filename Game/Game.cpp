@@ -411,7 +411,7 @@ void Game::plateauInit()
         plateau[premier_quart_vert.getX()][premier_quart_vert.getY()].setMurB(1);//cree mur int
    }  
 
-   //generer mur interieur et leur cible pour chaque quart
+   //generer mur interieur 
     for(int quart_plateau = premier_quart;quart_plateau<=quatrieme_quart;quart_plateau++)
     {
         for(int i = 0;i<4;i++)//gener quatre mur interieur
