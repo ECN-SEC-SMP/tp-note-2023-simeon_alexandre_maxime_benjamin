@@ -205,6 +205,7 @@ bool Game::playTurn(Target* target) {
             for(int i=0;i<=4;i++){
                 robots[i]->setPrevPosition(robots[i]->getPosition()); // sauvegarde position
             }
+            joueurs[i]->addPoint(); // ajoute un point au joueur qui a réussi
             return true; 
         }
         for(int i=0;i<=4;i++){
