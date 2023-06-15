@@ -70,27 +70,6 @@ private:
     */
     void affichage_case(Target* target, int x, int y);
 
-public:
-    /*!
-      permet d'instancier le jeu
-    */
-    Game(void);
-    /**
-     * @brief permet d'initialiser le jeu
-     * @details la fonction initialise le plateau de jeu. La fonction génère les targets.
-     * Elle récupère le nombre de joeur et leur nom saisie au clavier.
-     * Pour finir elle cree les robots
-    */
-    void iniGame();
-    /**
-     * @brief permet de jour une fois l'initialisation réalisé
-     * @details En premier la focntion affiche le plateau. Ensuite elle récupère la valeur 
-     * saisie au clavier de l'action à réaliser, le nombre de déplacements pour un joueur
-     * @param target [Target*] cible 
-     * @return [bool] retourne vrai si le joeur rentre un deplacement et une action valide.
-    */
-    bool playTurn(Target* target);
-
     /**
      * @brief permet de déplacer un robort sur le plateau
      * @details la focntion permet de dépalcer un robot en focntion du mouvmeent saisie au clavier par le joueur.
@@ -135,14 +114,14 @@ public:
     */
     void plateauInit(void);
 
-  /**
-   * @brief permet de géneré un angle pour l'un des quarts du plateau
-   * @details la fonction génèrer une position aleatoire pour un angle en fonction du quart du plateau 
-   * Si l'angle est trop proche d'un autre ou il y a un deja un angle dan sla case on rappelle la fonction.
-   * Enfin on crée l'angle dans la case correspondante à la position
-   * @param quart_plateau [int]
-   * premier_quart (haut gauche), deuxieme_quart(haut droit), troisieme_quart(bas droit), quatrieme_quart(bas gauche)
-   */  
+    /**
+     * @brief permet de géneré un angle pour l'un des quarts du plateau
+     * @details la fonction génèrer une position aleatoire pour un angle en fonction du quart du plateau 
+     * Si l'angle est trop proche d'un autre ou il y a un deja un angle dan sla case on rappelle la fonction.
+     * Enfin on crée l'angle dans la case correspondante à la position
+     * @param quart_plateau [int]
+     * premier_quart (haut gauche), deuxieme_quart(haut droit), troisieme_quart(bas droit), quatrieme_quart(bas gauche)
+    */
     void murInterieur(int quart_plateau);
 
     /**
@@ -150,6 +129,27 @@ public:
      * @details cette foncntion permet de générer la position aleatoiement de la target et de créer un angle au même endroit
     */
     void generer17emeTarget(void);
+
+public:
+    /*!
+      permet d'instancier le jeu
+    */
+    Game(void);
+    /**
+     * @brief permet d'initialiser le jeu
+     * @details la fonction initialise le plateau de jeu. La fonction génère les targets.
+     * Elle récupère le nombre de joeur et leur nom saisie au clavier.
+     * Pour finir elle cree les robots
+    */
+    void iniGame();
+    /**
+     * @brief permet de jour une fois l'initialisation réalisé
+     * @details En premier la focntion affiche le plateau. Ensuite elle récupère la valeur 
+     * saisie au clavier de l'action à réaliser, le nombre de déplacements pour un joueur
+     * @param target [Target*] cible 
+     * @return [bool] retourne vrai si le joeur rentre un deplacement et une action valide.
+    */
+    bool playTurn(Target* target);
 
     /**
      * @brief permet de retourn une cible du vecteur Target
