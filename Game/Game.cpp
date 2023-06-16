@@ -8,7 +8,7 @@ Game::Game(void) {
     {
         for(int x=0; x<16;x++)
         {            
-            plateau[y][x] = Case();
+            plateau[x][y] = Case();
         }
     }
 }
@@ -42,7 +42,7 @@ Robot* Game::createRobot(Color color){
     }
     // cout<< "creation pointeur de robot"<<endl;
     Robot* z = new Robot (color, p);
-    plateau[p.getY()][p.getX()].setRobot(z);
+    plateau[p.getX()][p.getY()].setRobot(z);
     return z; 
 }
 
@@ -209,9 +209,9 @@ bool Game::playTurn(Target* target) {
             return true; 
         }
         for(int i=0;i<=4;i++){
-            plateau[robots[i]->getPosition().getY()][robots[i]->getPosition().getX()].setRobot(nullptr);
+            plateau[robots[i]->getPosition().getX()][robots[i]->getPosition().getY()].setRobot(nullptr);
             robots[i]->setPosition(robots[i]->getPrevPosition()); // replace les robots
-            plateau[robots[i]->getPosition().getY()][robots[i]->getPosition().getX()].setRobot(robots[i]);
+            plateau[robots[i]->getPosition().getX()][robots[i]->getPosition().getY()].setRobot(robots[i]);
         }
     }
     return false; 
@@ -224,58 +224,58 @@ void Game::moveRobot(Robot* robot, Direction direction){
         switch (direction)
         {
         case UP:
-            if(plateau[robot->getPosition().getY()][robot->getPosition().getX()].getMurH()){ // teste le mur
+            if(plateau[robot->getPosition().getX()][robot->getPosition().getY()].getMurH()){ // teste le mur
                 blocked=true;
             }
-            else if(plateau[robot->getPosition().getY()][robot->getPosition().getX()-1].getRobot()!=nullptr){ // teste s'il y a un robot
+            else if(plateau[robot->getPosition().getX()][robot->getPosition().getY()-1].getRobot()!=nullptr){ // teste s'il y a un robot
                 blocked=true;
             }
             else{
+                plateau[robot->getPosition().getX()][robot->getPosition().getY()].setRobot(nullptr);
                 robot->setPosition(Position(robot->getPosition().getX(), robot->getPosition().getY()-1)); // déplace le robot en haut
-                plateau[robot->getPosition().getY()][robot->getPosition().getX()].setRobot(nullptr);
-                plateau[robot->getPosition().getY()-1][robot->getPosition().getX()].setRobot(robot);
+                plateau[robot->getPosition().getX()][robot->getPosition().getY()].setRobot(robot);
             }
             break;
 
         case DOWN:
-            if(plateau[robot->getPosition().getY()][robot->getPosition().getX()].getMurB()){ // teste le mur
+            if(plateau[robot->getPosition().getX()][robot->getPosition().getY()].getMurB()){ // teste le mur
                 blocked=true;
             }
-            else if(plateau[robot->getPosition().getY()][robot->getPosition().getX()+1].getRobot()!=nullptr){ // teste s'il y a un robot
+            else if(plateau[robot->getPosition().getX()][robot->getPosition().getY()+1].getRobot()!=nullptr){ // teste s'il y a un robot
                 blocked=true;
             }
             else{
+                plateau[robot->getPosition().getX()][robot->getPosition().getY()].setRobot(nullptr);
                 robot->setPosition(Position(robot->getPosition().getX(), robot->getPosition().getY()+1)); // déplace le robot en bas
-                plateau[robot->getPosition().getY()][robot->getPosition().getX()].setRobot(nullptr);
-                plateau[robot->getPosition().getY()+1][robot->getPosition().getX()].setRobot(robot);
+                plateau[robot->getPosition().getX()][robot->getPosition().getY()].setRobot(robot);
             }
             break;
 
         case LEFT:
-            if(plateau[robot->getPosition().getY()][robot->getPosition().getX()].getMurG()){ // teste le mur
+            if(plateau[robot->getPosition().getX()][robot->getPosition().getY()].getMurG()){ // teste le mur
                 blocked=true;
             }
-            else if(plateau[robot->getPosition().getY()-1][robot->getPosition().getX()].getRobot()!=nullptr){ // teste s'il y a un robot
+            else if(plateau[robot->getPosition().getX()-1][robot->getPosition().getY()].getRobot()!=nullptr){ // teste s'il y a un robot
                 blocked=true;
             }
             else{
+                plateau[robot->getPosition().getX()][robot->getPosition().getY()].setRobot(nullptr);
                 robot->setPosition(Position(robot->getPosition().getX()-1, robot->getPosition().getY())); // déplace le robot à gauche
-                plateau[robot->getPosition().getY()][robot->getPosition().getX()].setRobot(nullptr);
-                plateau[robot->getPosition().getY()][robot->getPosition().getX()-1].setRobot(robot);
+                plateau[robot->getPosition().getX()][robot->getPosition().getY()].setRobot(robot);
             }
             break;
 
         default:
-            if(plateau[robot->getPosition().getY()][robot->getPosition().getX()].getMurD()){ // teste le mur
+            if(plateau[robot->getPosition().getX()][robot->getPosition().getY()].getMurD()){ // teste le mur
                 blocked=true;
             }
-            else if(plateau[robot->getPosition().getY()+1][robot->getPosition().getX()].getRobot()!=nullptr){ // teste s'il y a un robot
+            else if(plateau[robot->getPosition().getX()+1][robot->getPosition().getY()].getRobot()!=nullptr){ // teste s'il y a un robot
                 blocked=true;
             }
             else{
+                plateau[robot->getPosition().getX()][robot->getPosition().getY()].setRobot(nullptr);
                 robot->setPosition(Position(robot->getPosition().getX()+1, robot->getPosition().getY())); // déplace le robot à droite
-                plateau[robot->getPosition().getY()][robot->getPosition().getX()].setRobot(nullptr);
-                plateau[robot->getPosition().getY()][robot->getPosition().getX()+1].setRobot(robot);
+                plateau[robot->getPosition().getX()][robot->getPosition().getY()].setRobot(robot);
             }
             break;
         }
@@ -288,7 +288,7 @@ bool Game::isTargetReached(const Target* target) const{
     x = target->getPosition().getX();
     y = target->getPosition().getY();
 
-    if((plateau[y][x].getRobot()->getColor() == target->getColor()) || (plateau[y][x].getRobot() && target->getColor() == MULTICOLOR)){
+    if((plateau[x][y].getRobot()->getColor() == target->getColor()) || (plateau[x][y].getRobot() && target->getColor() == MULTICOLOR)){
         return true;
     }
     return false;
@@ -468,18 +468,18 @@ void Game::murInterieur(int quart_plateau)//genere mur interieur avec ca cible
     }     
 
     //verifie qu'il ny ai pas 2 angle cote a cote
-    if(plateau[p.getY()][p.getX()].getAngle() == NONE
+    if(plateau[p.getX()][p.getY()].getAngle() == NONE
     
-        && plateau[p.getY()-1][p.getX()-1].getAngle() == NONE && plateau[p.getY()-1][p.getX()+1].getAngle() == NONE //pas d'angle diagonal bas gauche et bas droit
-        && plateau[p.getY()+1][p.getX()+1].getAngle() == NONE && plateau[p.getY()+1][p.getX()-1].getAngle() == NONE //pas d'angle diagonal haut gauche et bas droit
-        && plateau[p.getY()][p.getX()+1].getAngle() == NONE && plateau[p.getY()][p.getX()-1].getAngle() == NONE//pas d'angle a droite ni a gauche
-        && plateau[p.getY()-1][p.getX()].getAngle() == NONE && plateau[p.getY()+1][p.getX()].getAngle() == NONE// pas d'angle ni en haut ni en bas     
+        && plateau[p.getX()-1][p.getY()-1].getAngle() == NONE && plateau[p.getX()-1][p.getY()+1].getAngle() == NONE //pas d'angle diagonal bas gauche et bas droit
+        && plateau[p.getX()+1][p.getY()+1].getAngle() == NONE && plateau[p.getX()+1][p.getY()-1].getAngle() == NONE //pas d'angle diagonal haut gauche et bas droit
+        && plateau[p.getX()][p.getY()+1].getAngle() == NONE && plateau[p.getX()][p.getY()-1].getAngle() == NONE//pas d'angle a droite ni a gauche
+        && plateau[p.getX()-1][p.getY()].getAngle() == NONE && plateau[p.getX()+1][p.getY()].getAngle() == NONE// pas d'angle ni en haut ni en bas     
 
-        && plateau[p.getY()][p.getX()].getAngle() == NONE)//verifie que la case n'a pas deja un angle
+        && plateau[p.getX()][p.getY()].getAngle() == NONE)//verifie que la case n'a pas deja un angle
     {
-        plateau[p.getY()][p.getX()].setAngle();// cree un angle dan la case 
+        plateau[p.getX()][p.getY()].setAngle();// cree un angle dan la case 
         //Target* newTarget = new Target(couleur,symbolTarget,p); 
-        //plateau[p.getY()][p.getX()]->setTarget(newTarget);//cree une cible dans la case    
+        //plateau[p.getX()][p.getY()]->setTarget(newTarget);//cree une cible dans la case    
         //targets.push_back(newTarget); 
 
         //return newTarget;       
@@ -499,13 +499,13 @@ void Game::generer17emeTarget()
     p.setX(1 + rand() % 14);
     p.setY(1 + rand() % 14);
 
-    if((p.getX() == 7 && p.getY() == 7) || (p.getX() == 8 && p.getY() == 7) ||(p.getX() == 8 && p.getY() == 8) ||(p.getX() == 7 && p.getY() == 8) || plateau[p.getY()][p.getX()].getAngle() != NONE)
+    if((p.getX() == 7 && p.getY() == 7) || (p.getX() == 8 && p.getY() == 7) ||(p.getX() == 8 && p.getY() == 8) ||(p.getX() == 7 && p.getY() == 8) || plateau[p.getX()][p.getY()].getAngle() != NONE)
     {
         generer17emeTarget();
     }
     else
     {
-        plateau[p.getY()][p.getX()].setAngle();
+        plateau[p.getX()][p.getY()].setAngle();
     }
 
 
@@ -541,8 +541,8 @@ void Game::genererTargets(){
     int cptTargets=0;
     for(int x=0;x<16;x++){
         for(int y=0;y<16;y++){
-            if(plateau[y][x].getAngle()!=NONE){
-                plateau[y][x].setTarget(targets[cptTargets]);
+            if(plateau[x][y].getAngle()!=NONE){
+                plateau[x][y].setTarget(targets[cptTargets]);
                 p.setX(x);
                 p.setY(y);
                 targets[cptTargets]->setPosition(p);
@@ -568,12 +568,12 @@ void Game::affichage_case(Target* target, int x, int y)//gere l'affichage d'une 
     plateau[7][7].setMurH(true);
     plateau[7][7].setTarget(target);
 
-    plateau[8][7].setMurG(true);
-    plateau[8][7].setMurB(true);
+    plateau[8][7].setMurD(true);
+    plateau[8][7].setMurH(true);
     plateau[8][7].setTarget(target);
 
-    plateau[7][8].setMurH(true);
-    plateau[7][8].setMurD(true);
+    plateau[7][8].setMurB(true);
+    plateau[7][8].setMurG(true);
     plateau[7][8].setTarget(target);
 
     plateau[8][8].setMurD(true);
@@ -584,22 +584,22 @@ void Game::affichage_case(Target* target, int x, int y)//gere l'affichage d'une 
     //bord du plateaau 
     for(int i=0;i<16;i++)
     {
-        plateau[i][0].setMurG(true);
-        plateau[15][i].setMurB(true);
-        plateau[i][15].setMurD(true); 
-        plateau[0][i].setMurH(true);        
+        plateau[i][0].setMurH(true);
+        plateau[15][i].setMurD(true);
+        plateau[i][15].setMurB(true); 
+        plateau[0][i].setMurG(true);
     }
 
     //Si il y a un angle bas droit OU il y a un mur haut sur la case dessous   
-    if((plateau[y][x].getMurG() == false && plateau[y][x].getMurB() == true) || (y<14 && plateau[y][x].getMurG() == false &&  plateau[y+1][x].getMurH()== true))
+    if((plateau[x][y].getMurG() == false && plateau[x][y].getMurB() == true) || (y<14 && plateau[x][y].getMurG() == false &&  plateau[x][y+1].getMurH()== true))
     {
-        if(plateau[y][x].getTarget() == nullptr && plateau[y][x].getRobot() != nullptr)
+        if(plateau[x][y].getRobot() != nullptr)
         {
-            cout << ":" << plateau[y][x].getRobot()->getCaractereColorRobot() << "";//affiche dans la case initiales robot si il y en a un
+            cout << ":" << plateau[x][y].getRobot()->getCaractereColorRobot() << "";//affiche dans la case initiales robot si il y en a un
         }
-        else if(plateau[y][x].getTarget() != nullptr)
+        else if(plateau[x][y].getTarget() != nullptr)
         {
-            cout << ":_" << plateau[y][x].getTarget()->getCaracteresTarget() << "_";//affiche dans la case initiales Target si il y en a une
+            cout << ":_" << plateau[x][y].getTarget()->getCaracteresTarget() << "_";//affiche dans la case initiales Target si il y en a une
             
         }
         else
@@ -609,15 +609,15 @@ void Game::affichage_case(Target* target, int x, int y)//gere l'affichage d'une 
         
     }
     //angle haut gauche OU case precedente gauche a un mur droit
-    else if((plateau[y][x].getMurG() == true && plateau[y][x].getMurB() == false) || (x>0 && plateau[y][x-1].getMurD() == true && plateau[y][x].getMurB() == false))
+    else if((plateau[x][y].getMurG() == true && plateau[x][y].getMurB() == false) || (x>0 && plateau[x-1][y].getMurD() == true && plateau[x][y].getMurB() == false))
     {
-        if(plateau[y][x].getTarget() == nullptr && plateau[y][x].getRobot() != nullptr)
+        if(plateau[x][y].getRobot() != nullptr)
         {
-            cout << "|" << plateau[y][x].getRobot()->getCaractereColorRobot() << "";
+            cout << "|" << plateau[x][y].getRobot()->getCaractereColorRobot() << "";
         }
-       else if(plateau[y][x].getTarget() != nullptr)
+       else if(plateau[x][y].getTarget() != nullptr)
         {
-            cout << "|." << plateau[y][x].getTarget()->getCaracteresTarget() << ".";
+            cout << "|." << plateau[x][y].getTarget()->getCaracteresTarget() << ".";
             
         }        
         else
@@ -626,15 +626,15 @@ void Game::affichage_case(Target* target, int x, int y)//gere l'affichage d'une 
         }
     }
     //angle bas droit
-    else if((plateau[y][x].getMurG() == true && plateau[y][x].getMurB() == true))
+    else if((plateau[x][y].getMurG() == true && plateau[x][y].getMurB() == true))
     {
-        if(plateau[y][x].getTarget() == nullptr && plateau[y][x].getRobot() != nullptr) 
+        if(plateau[x][y].getRobot() != nullptr) 
         {
-            cout << "|" << plateau[y][x].getRobot()->getCaractereColorRobot() << "";
+            cout << "|" << plateau[x][y].getRobot()->getCaractereColorRobot() << "";
         }
-       else if(plateau[y][x].getTarget() != nullptr)
+       else if(plateau[x][y].getTarget() != nullptr)
         {
-            cout << "|_" << plateau[y][x].getTarget()->getCaracteresTarget() << "_";
+            cout << "|_" << plateau[x][y].getTarget()->getCaracteresTarget() << "_";
             
         }        
         else
@@ -645,15 +645,15 @@ void Game::affichage_case(Target* target, int x, int y)//gere l'affichage d'une 
     //angle haut droit OU pas d'angle
     else
     {
-        if(plateau[y][x].getRobot() != nullptr)
+        if(plateau[x][y].getRobot() != nullptr)
         {
-            cout << ":" << plateau[y][x].getRobot()->getCaractereColorRobot() << "";
+            cout << ":" << plateau[x][y].getRobot()->getCaractereColorRobot() << "";
         }
-       else if(plateau[y][x].getTarget() != nullptr)
+       else if(plateau[x][y].getTarget() != nullptr)
         {
-            cout << ":." << plateau[y][x].getTarget()->getCaracteresTarget() << ".";
+            cout << ":." << plateau[x][y].getTarget()->getCaracteresTarget() << ".";
         }
-        else if(plateau[y][x].getRobot() == nullptr || plateau[y][x].getRobot()->getPosition().getX() != y || plateau[y][x].getRobot()->getPosition().getY() != x)
+        else if(plateau[x][y].getRobot() == nullptr || plateau[x][y].getRobot()->getPosition().getX() != y || plateau[x][y].getRobot()->getPosition().getY() != x)
         {        
             cout << ":....";
         }    
