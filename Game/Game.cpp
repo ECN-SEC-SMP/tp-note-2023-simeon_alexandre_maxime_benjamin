@@ -165,23 +165,35 @@ bool Game::playTurn(Target* target) {
             else nbok = true; 
         }
         int nb = atoi(nbc.c_str()); // conversion en entier
-        if (nbmvt.size() == 0) nbmvt.push_back(nb);
+        if (nbmvt.size() == 0) {
+            nbmvt.push_back(nb);
+            ordrePlayer.push_back(temp);
+        }
         else{
+            bool inserted = false; 
             for (unsigned i =0;i<nbmvt.size(); i++){
                 cout << "entree for nbmvt"<< endl; 
                 if (nb >=nbmvt[i]){
-                nbmvt.insert(nbmvt.begin()+i, nb);
-                ordrePlayer.insert(ordrePlayer.begin()+i, temp);
+                    cout << "nbmvt : "<< nbmvt[i]<< endl; 
+                    nbmvt.insert(nbmvt.begin()+i, nb);
+                    ordrePlayer.insert(ordrePlayer.begin()+i, temp);
+                    inserted = true;
+                    break;
+                    cout << "fin insert"<<endl;
                 }
                 cout << "fin test" << endl;
             } 
+            if (!inserted){
+                nbmvt.push_back(nb); 
+                ordrePlayer.push_back(temp); 
+            }
         }
         nbval++; 
     }
     // while (! target reached)
     cout << "realisation des tours, nbmvt = "<<  endl; 
-    for (unsigned i=0; i<joueurs.size() ;i++){ // laisser les joueurs réaliser leurs essais 
-        cout<< "entree for : " << joueurs[i]<< "nbmvt : " << nbmvt[i] <<  endl;
+    for (unsigned i=joueurs.size()-1; i>0 ;i--){ // laisser les joueurs réaliser leurs essais 
+        cout<< "entree for : " << joueurs[i]->getName()<< " nbmvt : " << nbmvt[i] <<  endl;
         for (unsigned u =0; u<nbmvt[i]; u++){ //le joueur va réaliser les n mvt qu'il a indiqué 
             cout << "couleur robot : "; 
             cin >> color; 
@@ -201,7 +213,9 @@ bool Game::playTurn(Target* target) {
             moveRobot(findRobot(color) , direction);
             afficher_plateau(target);
         }
+        cout << "fin tour"<< endl; 
         if (isTargetReached(target)){
+            cout << "test reached" << endl; 
             for(int i=0;i<=4;i++){
                 robots[i]->setPrevPosition(robots[i]->getPosition()); // sauvegarde position
             }
