@@ -422,8 +422,8 @@ void Game::plateauInit()
         for(int i = 0;i < 1000000000;i++){}
         Position premier_quart_vert = mur_exterieur_vertical(quart_plateau);//genere coordonnees mur ext vertical
 
-        plateau[premier_quart_horiz.getX()][premier_quart_horiz.getY()].setMurG(1);//cree mur ext
-        plateau[premier_quart_vert.getX()][premier_quart_vert.getY()].setMurB(1);//cree mur int
+        plateau[premier_quart_horiz.getX()][premier_quart_horiz.getY()].setMurB(1);//cree mur ext
+        plateau[premier_quart_vert.getX()][premier_quart_vert.getY()].setMurG(1);//cree mur int
    }  
 
    //generer mur interieur 
