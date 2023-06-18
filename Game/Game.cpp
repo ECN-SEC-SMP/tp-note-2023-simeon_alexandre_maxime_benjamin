@@ -123,27 +123,34 @@ bool Game::playTurn(Target* target) {
     bool J =false; 
     bool nbok = false;
     vector<Player*> ordrePlayer;
+    ordrePlayer.clear();// assure que le vecteur est vide
     vector<int> nbmvt;
+    nbmvt.clear();// assure que le vecteur est vide
     Player* temp; 
     string color;  
     string mvt; 
     Direction direction; 
+    bool memeJoueur = false; 
     afficher_plateau(target);
     while (nbval != joueurs.size()){
         cout << "entree while"<<endl; 
         cout << "nom joueur :" ;
         cin >> nom;
+        J=false; 
         while (J == false){
-            for (unsigned i = 0; i <joueurs.size(); i++){ //on test que le joueur existe et récupère son numéro 
-                cout << "entree for"<< joueurs[i] << endl; 
+            for (unsigned u = 0; u <ordrePlayer.size(); u++){
+                if (nom == ordrePlayer[u]->getName())memeJoueur= true; // si joueur deja present dans le vecteur joueurs triés 
+            }
+            for (unsigned i = 0; i <joueurs.size()&& memeJoueur==false; i++){ //on test que le joueur existe et qu'il n'a pas déjà indiqué une val puis récupère son numéro 
+                cout << "entree for"<< joueurs[i] << "  "<< memeJoueur <<  endl; 
                 if (nom ==  joueurs[i]->getName()) {                     
                     temp= joueurs[i];
                     J = true; // on trouve le joueur
                 }
-            }
+            } 
             if (J== false){
                 cout << "fin test joueur"<< endl; 
-                cout << "joueur inexistant, recommencez : ";
+                cout << "joueur inexistant ou a deja rentre une valeur, recommencez : ";
                 cin >> nom; //On demande un nouveau nombre
             }                       
         }
@@ -192,7 +199,7 @@ bool Game::playTurn(Target* target) {
     }
     // while (! target reached)
     cout << "realisation des tours, nbmvt = "<<  endl; 
-    for (unsigned i=joueurs.size()-1; i>0 ;i--){ // laisser les joueurs réaliser leurs essais 
+    for (unsigned i=joueurs.size()-1; i>=0 ;i--){ // laisser les joueurs réaliser leurs essais 
         cout<< "entree for : " << joueurs[i]->getName()<< " nbmvt : " << nbmvt[i] <<  endl;
         for (unsigned u =0; u<nbmvt[i]; u++){ //le joueur va réaliser les n mvt qu'il a indiqué 
             cout << "couleur robot : "; 
@@ -222,11 +229,14 @@ bool Game::playTurn(Target* target) {
             joueurs[i]->addPoint(); // ajoute un point au joueur qui a réussi
             return true; 
         }
+        cout << "entree for" << endl; 
         for(int i=0;i<=4;i++){
+            cout << "dans for" << endl; 
             plateau[robots[i]->getPosition().getX()][robots[i]->getPosition().getY()].setRobot(nullptr);
             robots[i]->setPosition(robots[i]->getPrevPosition()); // replace les robots
             plateau[robots[i]->getPosition().getX()][robots[i]->getPosition().getY()].setRobot(robots[i]);
         }
+        cout << "fin for" << endl; 
     }
     return false; 
 
