@@ -493,7 +493,25 @@ void Game::murInterieur(int quart_plateau)//genere mur interieur avec ca cible
 
         && plateau[p.getX()][p.getY()].getAngle() == NONE)//verifie que la case n'a pas deja un angle
     {
-        plateau[p.getX()][p.getY()].setAngle();// cree un angle dan la case 
+        plateau[p.getX()][p.getY()].setAngle();// cree un angle dan la case
+        switch(plateau[p.getX()][p.getY()].getAngle()){
+            case HD:
+                plateau[p.getX()][p.getY()-1].setMurB(1); // mur du bas de la case au-dessus
+                plateau[p.getX()+1][p.getY()].setMurG(1); // mur de gauche de la case à droite
+            break;
+            case BD:
+                plateau[p.getX()][p.getY()+1].setMurH(1); // mur du haut de la case en-dessous
+                plateau[p.getX()+1][p.getY()].setMurG(1); // mur de gauche de la case à droite
+            break;
+            case BG:
+                plateau[p.getX()][p.getY()+1].setMurH(1); // mur du haut de la case en-dessous
+                plateau[p.getX()-1][p.getY()].setMurD(1); // mur de droite de la case à gauche
+            break;
+            case HG:
+                plateau[p.getX()][p.getY()-1].setMurB(1); // mur du bas de la case au-dessus
+                plateau[p.getX()-1][p.getY()].setMurD(1); // mur de droite de la case à gauche
+            break;
+        }
         //Target* newTarget = new Target(couleur,symbolTarget,p); 
         //plateau[p.getX()][p.getY()]->setTarget(newTarget);//cree une cible dans la case    
         //targets.push_back(newTarget); 
