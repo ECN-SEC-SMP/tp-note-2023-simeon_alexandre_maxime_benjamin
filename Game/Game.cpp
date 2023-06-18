@@ -90,7 +90,7 @@ void Game::iniGame(){
                 if (nom ==  joueurs[u]->getName()) doublon = true; // si on trouve un doublon on le signal et arrête de test
             }
             if (doublon == true){ // cas où il existe un doublon 
-                cout << "nom deja utiliser"<< endl; 
+                cout << "nom deja utilise"<< endl; 
                 cout << "nom du joueur "<< (i+1)<< " : ";
                 cin >> nom; // on récupère le nouveau nom 
             } // une fois fini la boucle recommance au début pour tester chaques noms à nouveau 
