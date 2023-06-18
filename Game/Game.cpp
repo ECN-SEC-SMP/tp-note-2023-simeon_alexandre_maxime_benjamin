@@ -192,7 +192,7 @@ bool Game::playTurn(Target* target) {
     }
     // while (! target reached)
     cout << "realisation des tours, nbmvt = "<<  endl; 
-    for (unsigned i=joueurs.size()-1; i>0 ;i--){ // laisser les joueurs réaliser leurs essais 
+    for (unsigned i=joueurs.size()-1; i>=0 ;i--){ // laisser les joueurs réaliser leurs essais 
         cout<< "entree for : " << joueurs[i]->getName()<< " nbmvt : " << nbmvt[i] <<  endl;
         for (unsigned u =0; u<nbmvt[i]; u++){ //le joueur va réaliser les n mvt qu'il a indiqué 
             cout << "couleur robot : "; 
